@@ -1,0 +1,18 @@
+# See: http://apps.man.poznan.pl/trac/pbs-drmaa
+
+# pbs_drmaa.conf - Sample pbs_drmaa configuration file:
+  
+pool_delay: 60,
+#cache_job_state: 60,
+#wait_thread: 1,
+#pbs_home:"/var/spool/PBS/spool/",
+
+#job_categories: {
+	#default: "-k n", # delete output files from execution hosts
+	#longterm: "-p -100 -l nice=5",
+	#amd64: "-l arch=amd64",
+	#python: "-l software=python",
+	#java: "-l software=java,vmem=500mb -v PATH=/opt/sun-jdk-1.6:/usr/bin:/bin",
+	#test: "-u test -q testing",
+ #},
+

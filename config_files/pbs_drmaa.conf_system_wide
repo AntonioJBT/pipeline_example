@@ -1,0 +1,11 @@
+ # pbs_drmaa.conf - Sample pbs_drmaa configuration file.
+  
+  pool_delay: 60,
+  ##wait_thread: 1,
+  ##pbs_home: "/var/spool2/server-logs",
+
+ #job_categories: {
+ # default: "-l walltime=01:01:00 -l mem=1500mb",
+ #},
+
+  

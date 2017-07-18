@@ -1,0 +1,8 @@
+http://apps.man.poznan.pl/trac/pbs-drmaa
+
+https://wiki.galaxyproject.org/Admin/Config/Performance/Cluster
+
+http://www.ruffus.org.uk/tutorials/new_tutorial/multiprocessing.html
+
+https://github.com/adrianveres/ruffus/blob/master/doc/faq.rst
+

@@ -101,8 +101,9 @@ import os
 import sqlite3
 
 # TO DO: check CGAT_core and how to import here:
-import CGAT.Experiment as E
-import CGATPipelines.Pipeline as P
+#import CGAT.Experiment as E
+import CGATPipeline_core.Pipeline as P
+import CGATPipeline_core.Pipeline as P
 
 # load options from the config file
 PARAMS = P.getParameters(
@@ -133,14 +134,17 @@ def connect():
 
 # ---------------------------------------------------
 # Specific pipeline tasks
-@transform(("pipeline.ini", "conf.py"),
+# Run CGAT pipeline_quickstart.py template functions:
+
+@transform(("pipeline.ini"),
            regex("(.*)\.(.*)"),
            r"\1.counts")
 def countWords(infile, outfile):
-    '''count the number of words in the pipeline configuration files.'''
+    '''count the number of words in the pipeline configuration files.
+       This function is a copy of pipeline_quickstart.py at CGAT'''
 
     # the command line statement we want to execute
-    statement = '''awk 'BEGIN { printf("word\\tfreq\\n"); } 
+    statement = '''awk 'BEGIN { printf("word\\tfreq\\n"); }
     {for (i = 1; i <= NF; i++) freq[$i]++}
     END { for (word in freq) printf "%%s\\t%%d\\n", word, freq[word] }'
     < %(infile)s > %(outfile)s'''
@@ -164,6 +168,54 @@ def loadWordCounts(infile, outfile):
 
 
 # ---------------------------------------------------
+# Tasks to test Ruffus
+
+@mkdir('ruffus_C1_results')
+def testRuffus(outfile):
+    ''' Runs the script a simple Ruffus test see:
+        http://www.ruffus.org.uk/tutorials/new_tutorial/introduction.html
+    '''
+
+    # the command line statement we want to execute
+    statement = ''' cd ruffus_C1_results;
+                    checkpoint;
+                    python ruffus_C1_intro.py '''
+
+    P.run()
+
+@follows(testRuffus)
+def testRuffusWithDrmaa():
+    ''' Runs two scripts to test Ruffus and drmaa libraries
+    '''
+
+    statement = ''' echo 'Test without full path:';
+                    checkpoint;
+                    which python;
+                    checkpoint;
+                    python --version;
+                    checkpoint;
+                    which R;
+                    checkpoint
+                '''
+
+    statement = ''' python ruffus_test_with_drmaa.py
+                '''
+
+    statement = ''' python ruffus_test_2_with_drmaa.py
+                '''
+
+    P.run()
+
+
+def testDrmaa():
+    '''
+    '''
+
+    statement = '''
+                '''
+
+    P.run()
+# ---------------------------------------------------
 # Generic pipeline tasks
 @follows(loadWordCounts)
 def full():
@@ -183,7 +235,8 @@ def full():
 if __name__ == '__main__':
     arguments = docopt(__doc__, version='xxx 0.1')
     print(arguments)
-    sys.exit(main())
+    sys.exit(P.main(sys.argv)) # This is because of CGATPipeline.Pipeline,
+                               # otherwise sys.exit(main))
 
 #if __name__ == "__main__":
 #    sys.exit(P.main(sys.argv))
