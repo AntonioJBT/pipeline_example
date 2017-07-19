@@ -18,6 +18,6 @@ python example4.py &> example4.out
 python example5.py &> example5.out
 python example6.py &> example6.out
 
-mv none.* $1
+#mv none.* $1
 mv *out $1
 

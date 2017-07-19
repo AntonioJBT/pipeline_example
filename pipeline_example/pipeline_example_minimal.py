@@ -150,8 +150,8 @@ def countWords(infile, outfile):
     < %(infile)s > %(outfile)s'''
 
     # execute command in variable statement.
-    #
-    # The command will be sent to the cluster.  The statement will be
+    # The command will be sent to the cluster (by default, but this can be
+    # turned off with --local).  The statement will be
     # interpolated with any options that are defined in in the
     # configuration files or variable that are declared in the calling
     # function.  For example, %(infile)s will we substituted with the
@@ -170,7 +170,7 @@ def loadWordCounts(infile, outfile):
 # ---------------------------------------------------
 # Tasks to test Ruffus
 
-@mkdir('ruffus_C1_results')
+@follows(@mkdir('ruffus_C1_results'))
 def testRuffus(outfile):
     ''' Runs the script a simple Ruffus test see:
         http://www.ruffus.org.uk/tutorials/new_tutorial/introduction.html
@@ -206,15 +206,16 @@ def testRuffusWithDrmaa():
 
     P.run()
 
-
-def testDrmaa():
+def testDrmaa(outdir):
+    ''' Runs the drmaa package example scripts to test installation, see:
+        https://github.com/pygridtools/drmaa-python
     '''
-    '''
 
-    statement = '''
+    statement = ''' ./run_all_drmaa_examples.sh drmaa_tests
                 '''
-
     P.run()
+
+
 # ---------------------------------------------------
 # Generic pipeline tasks
 @follows(loadWordCounts)
