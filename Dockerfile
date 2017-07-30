@@ -37,13 +37,13 @@ RUN apt-get update && apt-get install -y \
 
 # # Download and install PBSPro:
 # See INSTALL in https://github.com/PBSPro/pbspro/blob/master/INSTALL
-RUN sudo apt-get install gcc make libtool libhwloc-dev libx11-dev \
+RUN sudo apt-get install -y gcc make libtool libhwloc-dev libx11-dev \
       libxt-dev libedit-dev libical-dev ncurses-dev perl \
       postgresql-server-dev-all python-dev tcl-dev tk-dev swig \
       libexpat-dev libssl-dev libxext-dev libxft-dev autoconf \
       automake
 
-RUN apt-get install expat libedit2 postgresql python sendmail-bin \
+RUN apt-get install -y expat libedit2 postgresql python sendmail-bin \
     sudo tcl tk libical1a
 
 #wget http://wpc.23a7.iotacdn.net/8023A7/origin2/rl/PBS-Open/CentOS_7.zip
