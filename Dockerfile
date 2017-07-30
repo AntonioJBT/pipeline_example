@@ -75,14 +75,13 @@ RUN cd /usr/lib/ \
     && cd pbs-drmaa-1.0.19 \
     && ./configure && make \
     && touch ~/.pbs_drmaa.conf \
-    && cat <<EOT >> ~/.pbs_drmaa.conf
-    # This is a copy of my config at Imperial:
+    && printf "# This is a copy of my config at Imperial:
     # Also requires 
     # See: http://apps.man.poznan.pl/trac/pbs-drmaa
 
     # pbs_drmaa.conf - Sample pbs_drmaa configuration file:
     
-    pool_delay: 60,
+    #pool_delay: 60,
     #cache_job_state: 60,
     #wait_thread: 1,
     #pbs_home:'/var/spool/PBS/spool/',
@@ -93,10 +92,9 @@ RUN cd /usr/lib/ \
 	#python: '-l software=python',
 	#java: '-l software=java,vmem=500mb -v PATH=/opt/sun-jdk-1.6:/usr/bin:/bin',
 	#test: '-u test -q testing',
-    #},
-    EOT
-    \
-    && export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
+    #}," >> ~/.pbs_drmaa.conf
+
+RUN export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
 
 
 #############################
