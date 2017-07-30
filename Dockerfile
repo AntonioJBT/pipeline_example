@@ -82,7 +82,7 @@ RUN cd /usr/lib/ \
 
     # pbs_drmaa.conf - Sample pbs_drmaa configuration file:
     
-    pool_delay: 60,
+    #pool_delay: 60,
     #cache_job_state: 60,
     #wait_thread: 1,
     #pbs_home:'/var/spool/PBS/spool/',
