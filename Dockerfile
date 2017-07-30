@@ -19,6 +19,7 @@ FROM ubuntu
 #########
 # Contact
 #########
+
 MAINTAINER Antonio Berlanga-Taylor <a.berlanga@imperial.ac.uk>
 
 #########################
@@ -31,33 +32,44 @@ MAINTAINER Antonio Berlanga-Taylor <a.berlanga@imperial.ac.uk>
 
 # If running on Debian and anaconda/miniconda image, use apt-get:
 RUN apt-get update && apt-get install -y \
+    apt-utils \
     tzdata \
     wget \
     bzip2 \
     fixincludes \
     unzip \
     vim \
-    gcc \
-    sudo \
-    apt-utils
+    sudo
 
-# # Download and install PBSPro:
+# Additional packages installed for Ubuntu, taken from CGAT cgat example:
+# Probably not needed, didn't test though
+RUN sudo apt-get --quiet install -y gcc g++ \
+    zlib1g-dev libssl-dev libssl1.0.0 libbz2-dev libfreetype6-dev libpng12-dev \
+    libblas-dev libatlas-dev liblapack-dev gfortran libpq-dev r-base-dev \
+    libreadline-dev libmysqlclient-dev libboost-dev libsqlite3-dev
+
+
+########
+# PBSPro
+########
+
+# Download and install PBSPro:
 # See INSTALL in https://github.com/PBSPro/pbspro/blob/master/INSTALL
-RUN sudo apt-get install -y gcc make libtool libhwloc-dev libx11-dev \
+RUN sudo apt-get --quiet install -y make libtool libhwloc-dev libx11-dev \
       libxt-dev libedit-dev libical-dev ncurses-dev perl \
       postgresql-server-dev-all python-dev tcl-dev tk-dev swig \
       libexpat-dev libssl-dev libxext-dev libxft-dev autoconf \
       automake
 
-RUN apt-get install -y expat libedit2 postgresql python sendmail-bin \
-    sudo tcl tk libical1a
+RUN sudo apt-get install -y expat libedit2 postgresql python sendmail-bin \
+    tcl tk libical1a bison byacc
 
-#wget http://wpc.23a7.iotacdn.net/8023A7/origin2/rl/PBS-Open/CentOS_7.zip
-#    && mv CentOS_7.zip PBSPro_CentOS_7.zip \
-#    && unzip PBSPro_CentOS_7.zip \
-#    && mv CentOS_7 PBSPro_CentOS_7 \
-#    && cd PBSPro_CentOS_7 \
+# PBSPro looks for the header files (tcl and tk *.h files in /usr/include/ ;
+# these are in /usr/include/tcl/ so that several versions can be kept.
+# Softlink them otherwise PBSPro doesn't compile:
+RUN ln -s /usr/include/tcl/*.h /usr/include/
 
+# Get and install PBSPro for Debian systems:
 RUN cd /usr/lib/ \
     && wget https://github.com/PBSPro/pbspro/archive/v14.1.0.tar.gz \
     && mv v14.1.0.tar.gz PBSPro_v14.1.0.tar.gz \
@@ -77,7 +89,12 @@ RUN cd /usr/lib/ \
     && . /etc/profile.d/pbs.sh \
     && qstat -B
 
-# Download and install drmaa C library:
+
+#######
+# drmaa
+#######
+
+# Download and install drmaa C library for PBS:
 RUN cd /usr/lib/ \
     && wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pbs-drmaa-1.0.19.tar.gz \
     && tar xvfz pbs-drmaa-1.0.19.tar.gz \
@@ -111,29 +128,34 @@ RUN export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
 # Install additional packages
 #############################
 
+# Miniconda:
 RUN cd /usr/bin \
     && wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
-    && bash Miniconda3-latest-Linux-x86_64.sh
+    && bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda \
+    && export PATH="$HOME/miniconda/bin:$PATH" \
+    && source $HOME/miniconda3/bin/activate
 
+#RUN conda update conda
+
+# PIP:
 RUN pip install --upgrade pip \
     && pip list
 
-# If running with anaconda:
-#RUN conda update conda
-
+# R:
 # Install base R:
-RUN conda install -c r r \
-    && conda install rpy2
+RUN conda install -y -c r r
+
+# rpy2 is not in r-essentials, Dockerfile installation with pip errors
+RUN conda install -y rpy2
 
 # Install many essential packages:
 #RUN conda install -c r r-essentials \
 #    && conda update -c r r-essentials \
 #    && conda install rpy2
 
+# Create an environment:
 # conda create -n py35 python=3.5
 
-# rpy2 is not in r-essentials, Dockerfile installation with pip errors, use
-# conda install rpy2
 
 #########################
 # Install package to test 
