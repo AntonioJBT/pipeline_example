@@ -108,14 +108,124 @@ RUN cd /usr/lib/ \
 RUN sed -i 's/PBS_START_MOM=0/PBS_START_MOM=1/g' /etc/pbs.conf
 
 # Continue:
-RUN sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp 
-
-# Continue:
 RUN sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp \
     && sudo /etc/init.d/pbs start \
     && . /etc/profile.d/pbs.sh \
     && qstat -B
 
+
+#######
+# drmaa
+#######
+
+# Download and install drmaa C library for PBS:
+RUN cd /usr/lib/ \
+    && wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pbs-drmaa-1.0.19.tar.gz \
+    && tar xvfz pbs-drmaa-1.0.19.tar.gz \
+    && mv pbs-drmaa-1.0.19 /usr/bin/ \
+    && cd /usr/bin/pbs-drmaa-1.0.19 \
+    && ./configure && make \
+    && touch ~/.pbs_drmaa.conf \
+    && printf "# This is a copy of my config at Imperial:
+    # Also requires 
+    # See: http://apps.man.poznan.pl/trac/pbs-drmaa
+
+    # pbs_drmaa.conf - Sample pbs_drmaa configuration file:
+    
+    #pool_delay: 60,
+    #cache_job_state: 60,
+    #wait_thread: 1,
+    #pbs_home:'/var/spool/PBS/spool/',
+    #job_categories: {
+	#default: '-k n', # delete output files from execution hosts
+	#longterm: '-p -100 -l nice=5',
+	#amd64: '-l arch=amd64',
+	#python: '-l software=python',
+	#java: '-l software=java,vmem=500mb -v PATH=/opt/sun-jdk-1.6:/usr/bin:/bin',
+	#test: '-u test -q testing',
+    #}," >> ~/.pbs_drmaa.conf
+
+RUN export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
+
+
+#############################
+# Install additional packages
+#############################
+
+# Miniconda:
+RUN cd /usr/bin \
+    && wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+    && bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda \
+    && export PATH="$HOME/miniconda/bin:$PATH"
+
+# git:
+RUN conda install -y git
+
+# PIP:
+RUN pip install --upgrade pip \
+    && pip list
+
+# Base R:
+RUN conda install -y -c r r
+
+# Create an environment for py27:
+RUN conda create -y -n py27 python=2.7
+#    && source activate py27
+
+# Create one for py35, current miniconda runs 3.6 as causes some errors for
+# repos below:
+RUN conda create -y -n py35 python=3.5 \
+    && source activate py35
+
+# rpy2 is not in r-essentials, Dockerfile installation with pip errors
+RUN conda install -y rpy2
+
+
+#########################
+# Install package to test 
+#########################
+# Install CGAT core utilities:
+
+RUN cd /home \
+    && git clone https://github.com/AntonioJBT/CGATPipeline_core.git \
+    && cd CGATPipeline_core \
+    && pip install -r requirements.rst \
+    && python setup.py install \
+    && cd ..
+
+RUN cd /home \
+    && git clone https://github.com/AntonioJBT/project_quickstart.git \
+    && cd project_quickstart \
+    && pip install -r requirements.rst \
+    && python setup.py install \
+    && cd ..
+
+RUN cd /home \
+    && git clone https://github.com/AntonioJBT/pipeline_example.git \
+    && cd pipeline_example \
+    && pip install -r requirements.rst \
+    && python setup.py install \
+    && cd ..
+
+###############################
+# Install external dependencies
+###############################
+
+
+
+############################
+# Default action to start in
+############################
+# Only one CMD is read (if several only the last one is executed)
+
+# Set environment variables
+# ENV PATH=/shared/conda-install/envs/cgat-devel/bin:$PATH
+
+# Add an entry point to the cgat command
+#ENTRYPOINT ["/shared/conda-install/envs/cgat-devel/bin/cgat"]
+
+#CMD echo "Hello world"
 CMD ["/bin/bash"]
 
-
+# Create a shared folder between docker container and host
+#VOLUME ["/shared/data"]

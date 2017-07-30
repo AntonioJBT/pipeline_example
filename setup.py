@@ -83,8 +83,7 @@ except ImportError:  # Py2 to Py3
 # write `--force` instead of `--force=true` below.
 CONFIG = configparser.ConfigParser(allow_no_value = True)
 
-CONFIG.read(os.path.join(here, str('project_quickstart' + '.ini')))
-# str(CONFIG['metadata']['project_name'] + '.ini'))) 
+CONFIG.read(os.path.join(here, str('pipeline_example' + '.ini')))
 
 # Print keys (sections):
 print('Values for setup.py:', '\n')
@@ -116,7 +115,7 @@ print(version)
 major, minor1, minor2, s, tmp = sys.version_info
 
 if (major == 2 and minor1 < 7) or major < 2:
-    raise SystemExit("""project_quickstart requires Python 2.7 or later.""")
+    raise SystemExit("""The package requires Python 2.7 or later.""")
 
 # Get Ptyhon modules required:
 install_requires = []
@@ -199,7 +198,7 @@ setup(  # Package information:
         package_data={'': extra_files},
         # Dependencies:
         install_requires = install_requires,
-        entry_points={ 'console_scripts': ['project_quickstart = project_quickstart.project_quickstart:main'] },
+        #entry_points={ 'console_scripts': ['pipelineroject_quickstart = project_quickstart.project_quickstart:main'] },
         # Other options:
         zip_safe = False,
         )
