@@ -101,11 +101,12 @@ import os
 import sqlite3
 import shutil
 import subprocess
+import drmaa
 
 # TO DO: check CGAT_core and how to import here:
 #import CGAT.Experiment as E
-import CGATPipeline_core.Pipeline as P
-import CGATPipeline_core.Pipeline as P
+import CGATPipelines.Pipeline as P
+import CGATPipelines.Pipeline as P
 
 # load options from the config file
 PARAMS = P.getParameters(
@@ -172,7 +173,7 @@ def loadWordCounts(infile, outfile):
 # ---------------------------------------------------
 # Tasks to test Ruffus
 
-@follows(@mkdir('ruffus_C1_results'))
+@mkdir('ruffus_C1_results')
 def testRuffus(outfile):
     ''' Runs the script a simple Ruffus test with BLAST see:
         http://www.ruffus.org.uk/tutorials/new_tutorial/introduction.html

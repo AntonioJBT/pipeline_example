@@ -94,6 +94,13 @@ RUN cd home \
     && python setup.py install \
     && cd ..
 
+RUN cd home \
+    && git clone https://github.com/AntonioJBT/project_quickstart.git \
+    && cd project_quickstart \
+    && pip install -r requirements.rst \
+    && python setup.py install \
+    && cd ..
+
 
 ###############################
 # Install external dependencies

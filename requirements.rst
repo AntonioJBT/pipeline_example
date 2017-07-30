@@ -13,7 +13,7 @@ flake8>=3.0
 #coverage
 
 drmaa>=0.7.6
-pandas>=0.20.0
+#pandas>=0.20.0
 ruffus>=2.6
 
 #sphinx>=1.0.5
