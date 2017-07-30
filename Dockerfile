@@ -8,27 +8,16 @@
 # Base image
 ############
 
-# FROM continuumio/miniconda # probably OK but needs dependencies sorting out
-# and maybe conflicts with Requirements.py
-# FROM continuumio/anaconda # works
-# FROM continuumio/anaconda3
-
-# FROM jfloff/alpine-python:2.7
-# FROM jfloff/alpine-python
-# https://github.com/jfloff/alpine-python
-# This is a minimal Python 3 image that can start from python or bash
-
 FROM continuumio/miniconda3
+# It runs on Debian GNU/Linux 8; use e.g. uname -a ; cat /etc/issue.net
 
 # Or simply run:
-# docker run --rm -ti jfloff/alpine-python bash
-# docker run --rm -ti jfloff/alpine-python python hello.py
+# docker run --rm -ti continuumio/miniconda3
 
 #########
 # Contact
 #########
 MAINTAINER Antonio Berlanga-Taylor <a.berlanga@imperial.ac.uk>
-
 
 #########################
 # Update/install packages
@@ -36,17 +25,54 @@ MAINTAINER Antonio Berlanga-Taylor <a.berlanga@imperial.ac.uk>
 
 # Install system dependencies
 
-# For anaconda/miniconda:
+# If running on Debian and anaconda/miniconda image, use apt-get:
 RUN apt-get update && apt-get install -y \
     wget \
     bzip2 \
     fixincludes \
     unzip \
-    vim
+    vim \
+    gcc \
+    sudo
 
+# # Download and install PBSPro:
+# See INSTALL in https://github.com/PBSPro/pbspro/blob/master/INSTALL
+RUN sudo apt-get install gcc make libtool libhwloc-dev libx11-dev \
+      libxt-dev libedit-dev libical-dev ncurses-dev perl \
+      postgresql-server-dev-all python-dev tcl-dev tk-dev swig \
+      libexpat-dev libssl-dev libxext-dev libxft-dev autoconf \
+      automake
+
+RUN apt-get install expat libedit2 postgresql python sendmail-bin \
+    sudo tcl tk libical1a
+
+#wget http://wpc.23a7.iotacdn.net/8023A7/origin2/rl/PBS-Open/CentOS_7.zip
+#    && mv CentOS_7.zip PBSPro_CentOS_7.zip \
+#    && unzip PBSPro_CentOS_7.zip \
+#    && mv CentOS_7 PBSPro_CentOS_7 \
+#    && cd PBSPro_CentOS_7 \
+
+RUN wget https://github.com/PBSPro/pbspro/archive/v14.1.0.tar.gz \
+    && mv v14.1.0.tar.gz PBSPro_v14.1.0.tar.gz \
+    && tar xvfz PBSPro_v14.1.0.tar.gz \
+    && cd pbspro-14.1.0/ \
+    && ./autogen.sh \
+    && ./configure --help \
+    && ./configure --prefix=/opt/pbs --with-tcl=/usr/include/tcl8.6/ \
+    && make \
+    && sudo make install \
+    && sudo /opt/pbs/libexec/pbs_postinstall \
+    && touch /etc/pbs.conf \
+    && sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp \
+    && sudo /etc/init.d/pbs start \
+    && . /etc/profile.d/pbs.sh \
+    && qstat -B
+
+# Download and install drmaa C library:
 RUN cd /usr/lib/ \
-RUN wget https://sourceforge.net/projects/pbspro-drmaa/files/latest/download?source=files \
-    && cd pbs-drmaa \
+RUN wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pbs-drmaa-1.0.19.tar.gz \
+    && tar xvfz pbs-drmaa-1.0.19.tar.gz \
+    && cd pbs-drmaa-1.0.19 \
     && ./configure && make \
     && touch ~/.pbs_drmaa.conf \
     && echo "
@@ -70,26 +96,13 @@ RUN wget https://sourceforge.net/projects/pbspro-drmaa/files/latest/download?sou
     #}," >> ~/.pbs_drmaa.conf
     && export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
 
-# For Alpine:
-# https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management
-#RUN apk update && apk upgrade \
-#     && apk add \
-#     sudo \
-#     gcc
-
 
 #############################
 # Install additional packages
 #############################
 
-RUN pip install --upgrade pip
-#                          setuptools \
-#                          future \
-#                          ruffus \
-#                          numpy \
-#                          pandas \
-#                          pyyaml \
-#    && pip list
+RUN pip install --upgrade pip \
+    && pip list
 
 # If running with anaconda:
 #RUN conda update conda
@@ -106,7 +119,7 @@ RUN conda install -c r r \
 # conda create -n py35 python=3.5
 
 # rpy2 is not in r-essentials, Dockerfile installation with pip errors, use
-# conda install
+# conda install rpy2
 
 #########################
 # Install package to test 
