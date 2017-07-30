@@ -44,6 +44,32 @@ RUN apt-get update && apt-get install -y \
     unzip \
     vim
 
+RUN cd /usr/lib/ \
+RUN wget https://sourceforge.net/projects/pbspro-drmaa/files/latest/download?source=files \
+    && cd pbs-drmaa \
+    && ./configure && make \
+    && touch ~/.pbs_drmaa.conf \
+    && echo "
+    # This is a copy of my config at Imperial:
+    # Also requires 
+    # See: http://apps.man.poznan.pl/trac/pbs-drmaa
+    
+    # pbs_drmaa.conf - Sample pbs_drmaa configuration file:
+    
+    pool_delay: 60,
+    #cache_job_state: 60,
+    #wait_thread: 1,
+    #pbs_home:'/var/spool/PBS/spool/',
+    #job_categories: {
+	#default: '-k n', # delete output files from execution hosts
+	#longterm: '-p -100 -l nice=5',
+	#amd64: '-l arch=amd64',
+	#python: '-l software=python',
+	#java: '-l software=java,vmem=500mb -v PATH=/opt/sun-jdk-1.6:/usr/bin:/bin',
+	#test: '-u test -q testing',
+    #}," >> ~/.pbs_drmaa.conf
+    && export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
+
 # For Alpine:
 # https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management
 #RUN apk update && apk upgrade \
@@ -101,6 +127,12 @@ RUN cd home \
     && python setup.py install \
     && cd ..
 
+RUN cd home \
+    && git clone https://github.com/AntonioJBT/project_quickstart.git \
+    && cd project_quickstart \
+    && pip install -r requirements.rst \
+    && python setup.py install \
+    && cd ..
 
 ###############################
 # Install external dependencies
