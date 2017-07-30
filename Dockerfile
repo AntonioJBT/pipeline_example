@@ -99,8 +99,7 @@ RUN cd /usr/lib/ \
     && ./configure --prefix=/opt/pbs \
     && make \
     && sudo make install \
-    && sudo /opt/pbs/libexec/pbs_postinstall \
-    && touch /etc/pbs.conf
+    && sudo /opt/pbs/libexec/pbs_postinstall
     
 # If running on only one system, step 11 in INSTALL:
 # https://github.com/PBSPro/pbspro/blob/master/INSTALL
@@ -108,8 +107,22 @@ RUN cd /usr/lib/ \
 RUN sed -i 's/PBS_START_MOM=0/PBS_START_MOM=1/g' /etc/pbs.conf
 
 # Continue:
-RUN sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp \
-    && sudo /etc/init.d/pbs start \
+RUN sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp
+
+# TO DO: errors here with:
+"
+Step 12/26 : RUN sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp     && sudo /etc/init.d/pbs start     && . /etc/profile.d/pbs.sh     && qstat -B
+ ---> Running in 5709775f2cd8
+Starting PBS
+PBS Home directory /var/spool/pbs needs updating.
+Running /opt/pbs/libexec/pbs_habitat to update it.
+***
+*** Error initializing the PBS dataservice
+Error details:
+. exists, binaries missing...exiting
+The command '/bin/sh -c sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp     && sudo /etc/init.d/pbs start     && . /etc/profile.d/pbs.sh     && qstat -B' returned a non-zero code: 1
+"
+RUN sudo /etc/init.d/pbs start \
     && . /etc/profile.d/pbs.sh \
     && qstat -B
 
