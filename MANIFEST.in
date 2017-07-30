@@ -55,6 +55,19 @@ recursive-include tests *
 # Include addtional files needed, example data, etc.:
 include data_examples *
 
+recursive-include example_data *.txt
+recursive-include pipeline_example *.R
+recursive-include pipeline_example *.cgat_example
+recursive-include pipeline_example *.faa
+recursive-include pipeline_example *.ini
+recursive-include pipeline_example *.py
+recursive-include pipeline_example *.sh
+recursive-include pipeline_example *.sqlite
+recursive-include report *.rst
+
+recursive-include config_files *.conf_system_wide
+recursive-include config_files *.conf_user
+
 # Files to exclude:
 exclude .gitignore
 exclude .dir_bash_history
