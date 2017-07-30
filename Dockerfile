@@ -8,11 +8,13 @@
 # Base image
 ############
 
-FROM continuumio/miniconda3
+FROM ubuntu
+#FROM continuumio/miniconda3
 # It runs on Debian GNU/Linux 8; use e.g. uname -a ; cat /etc/issue.net
 
 # Or simply run:
 # docker run --rm -ti continuumio/miniconda3
+# docker run --rm -ti ubuntu
 
 #########
 # Contact
@@ -24,16 +26,20 @@ MAINTAINER Antonio Berlanga-Taylor <a.berlanga@imperial.ac.uk>
 #########################
 
 # Install system dependencies
+# Ubuntu base image no longer has tzdata, which requires user interaction if
+# not installed first manually here:
 
 # If running on Debian and anaconda/miniconda image, use apt-get:
 RUN apt-get update && apt-get install -y \
+    tzdata \
     wget \
     bzip2 \
     fixincludes \
     unzip \
     vim \
     gcc \
-    sudo
+    sudo \
+    apt-utils
 
 # # Download and install PBSPro:
 # See INSTALL in https://github.com/PBSPro/pbspro/blob/master/INSTALL
@@ -52,13 +58,16 @@ RUN apt-get install -y expat libedit2 postgresql python sendmail-bin \
 #    && mv CentOS_7 PBSPro_CentOS_7 \
 #    && cd PBSPro_CentOS_7 \
 
-RUN wget https://github.com/PBSPro/pbspro/archive/v14.1.0.tar.gz \
+RUN cd /usr/lib/ \
+    && wget https://github.com/PBSPro/pbspro/archive/v14.1.0.tar.gz \
     && mv v14.1.0.tar.gz PBSPro_v14.1.0.tar.gz \
+    && mv PBSPro_v14.1.0.tar.gz /usr/bin/ \
+    && cd /usr/bin/ \
     && tar xvfz PBSPro_v14.1.0.tar.gz \
     && cd pbspro-14.1.0/ \
     && ./autogen.sh \
     && ./configure --help \
-    && ./configure --prefix=/opt/pbs --with-tcl=/usr/include/tcl8.6/ \
+    && ./configure --prefix=/opt/pbs --with-tcl=/usr/include/tcl/ \
     && make \
     && sudo make install \
     && sudo /opt/pbs/libexec/pbs_postinstall \
@@ -72,7 +81,8 @@ RUN wget https://github.com/PBSPro/pbspro/archive/v14.1.0.tar.gz \
 RUN cd /usr/lib/ \
     && wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pbs-drmaa-1.0.19.tar.gz \
     && tar xvfz pbs-drmaa-1.0.19.tar.gz \
-    && cd pbs-drmaa-1.0.19 \
+    && mv pbs-drmaa-1.0.19 /usr/bin/ \
+    && cd /usr/bin/pbs-drmaa-1.0.19 \
     && ./configure && make \
     && touch ~/.pbs_drmaa.conf \
     && printf "# This is a copy of my config at Imperial:
@@ -100,6 +110,10 @@ RUN export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
 #############################
 # Install additional packages
 #############################
+
+RUN cd /usr/bin \
+    && wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+    && bash Miniconda3-latest-Linux-x86_64.sh
 
 RUN pip install --upgrade pip \
     && pip list
