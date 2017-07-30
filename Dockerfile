@@ -69,6 +69,24 @@ RUN sudo apt-get install -y expat libedit2 postgresql python sendmail-bin \
 # Softlink them otherwise PBSPro doesn't compile:
 RUN ln -s /usr/include/tcl/*.h /usr/include/
 
+# Also complains about database headers, do the same as above:
+RUN ln -sf /usr/include/*sql*/*h /usr/include/
+
+# Also complains about PBS shared database headers and all libraries needed
+# which are in /usr/lib/x86_64-linux-gnu/  and not in 
+# /usr/lib64/ or /usr/lib/ or /usr/lib/x86_64-linux-gnu/
+# Create links for these as above:
+
+#RUN ln -sf /usr/lib/x86_64-linux-gnu/libpq.* /usr/include/ \
+#    && ln -sf /usr/lib/x86_64-linux-gnu/libpq.* /usr/lib/ \
+#    && ln -sf /usr/lib/x86_64-linux-gnu/libexpat.* /usr/lib/ \
+   
+# Just link them all... :
+RUN ln -sf /usr/lib/x86_64-linux-gnu/lib* /usr/lib/
+
+# PBSPro needs Python version 2.6 or 2.7
+
+
 # Get and install PBSPro for Debian systems:
 RUN cd /usr/lib/ \
     && wget https://github.com/PBSPro/pbspro/archive/v14.1.0.tar.gz \
@@ -79,12 +97,20 @@ RUN cd /usr/lib/ \
     && cd pbspro-14.1.0/ \
     && ./autogen.sh \
     && ./configure --help \
-    && ./configure --prefix=/opt/pbs --with-tcl=/usr/include/tcl/ \
+    && ./configure --prefix=/opt/pbs \
     && make \
     && sudo make install \
     && sudo /opt/pbs/libexec/pbs_postinstall \
-    && touch /etc/pbs.conf \
-    && sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp \
+    && touch /etc/pbs.conf
+    
+# If running on only one system, step 11 in INSTALL:
+# https://github.com/PBSPro/pbspro/blob/master/INSTALL
+# change pbs.conf as follows:
+RUN sed -i 's/PBS_START_MOM=0/PBS_START_MOM=1/g' /etc/pbs.conf
+
+
+# Continue:
+RUN sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp \
     && sudo /etc/init.d/pbs start \
     && . /etc/profile.d/pbs.sh \
     && qstat -B
