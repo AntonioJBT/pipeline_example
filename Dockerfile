@@ -70,7 +70,7 @@ RUN wget https://github.com/PBSPro/pbspro/archive/v14.1.0.tar.gz \
 
 # Download and install drmaa C library:
 RUN cd /usr/lib/ \
-RUN wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pbs-drmaa-1.0.19.tar.gz \
+    && wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pbs-drmaa-1.0.19.tar.gz \
     && tar xvfz pbs-drmaa-1.0.19.tar.gz \
     && cd pbs-drmaa-1.0.19 \
     && ./configure && make \
@@ -79,7 +79,7 @@ RUN wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pb
     # This is a copy of my config at Imperial:
     # Also requires 
     # See: http://apps.man.poznan.pl/trac/pbs-drmaa
-    
+
     # pbs_drmaa.conf - Sample pbs_drmaa configuration file:
     
     pool_delay: 60,
@@ -93,7 +93,7 @@ RUN wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pb
 	#python: '-l software=python',
 	#java: '-l software=java,vmem=500mb -v PATH=/opt/sun-jdk-1.6:/usr/bin:/bin',
 	#test: '-u test -q testing',
-    #}," >> ~/.pbs_drmaa.conf
+    #}," >> ~/.pbs_drmaa.conf \
     && export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
 
 
