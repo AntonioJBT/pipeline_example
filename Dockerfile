@@ -128,26 +128,26 @@ RUN cd /usr/lib/ \
     && ./configure && make \
     && touch ~/.pbs_drmaa.conf \
     && printf "# This is a copy of my config at Imperial:
-    # Also requires 
-    # See: http://apps.man.poznan.pl/trac/pbs-drmaa
+# Also requires 
+# See: http://apps.man.poznan.pl/trac/pbs-drmaa
 
-    # pbs_drmaa.conf - Sample pbs_drmaa configuration file:
-    
-    #pool_delay: 60,
-    #cache_job_state: 60,
-    #wait_thread: 1,
-    #pbs_home:'/var/spool/PBS/spool/',
-    #job_categories: {
-        #default: '-k n', # delete output files from execution hosts
-        #longterm: '-p -100 -l nice=5',
-        #amd64: '-l arch=amd64',
-        #python: '-l software=python',
-        #java: '-l software=java,vmem=500mb -v PATH=/opt/sun-jdk-1.6:/usr/bin:/bin',
-        #test: '-u test -q testing',
-        #}," >> ~/.pbs_drmaa.conf 
+# pbs_drmaa.conf - Sample pbs_drmaa configuration file:
 
-RUN sed -i 's/"#pool_delay: 60,"/"pool_delay: 60,"/g' ~/.pbs_drmaa.conf \
-    && sed -i 's/"#pbs_home:'/var/spool/PBS/spool/',"/"pbs_home:'/var/spool/PBS/spool/',"/g' ~/.pbs_drmaa.conf \
+#pool_delay: 60,
+#cache_job_state: 60,
+#wait_thread: 1,
+#pbs_home:'/var/spool/PBS/spool/',
+#job_categories: {
+    #default: '-k n', # delete output files from execution hosts
+    #longterm: '-p -100 -l nice=5',
+    #amd64: '-l arch=amd64',
+    #python: '-l software=python',
+    #java: '-l software=java,vmem=500mb -v PATH=/opt/sun-jdk-1.6:/usr/bin:/bin',
+    #test: '-u test -q testing',
+    #}," >> ~/.pbs_drmaa.conf 
+
+RUN sed -i 's/#pool_delay/pool_delay/g' ~/.pbs_drmaa.conf \
+    && sed -i 's/#pbs_home/pbs_home/g' ~/.pbs_drmaa.conf \
     && cat ~/.pbs_drmaa.conf
 
 RUN export DRMAA_LIBRARY_PATH=/usr/local/lib/libdrmaa.so.1
