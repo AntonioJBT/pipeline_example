@@ -111,8 +111,9 @@ RUN sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp
 
 # This errors:
 #RUN sudo /etc/init.d/pbs start \
-#    && . /etc/profile.d/pbs.sh \
-#    && qstat -B
+
+RUN . /etc/profile.d/pbs.sh 
+    && qstat -B
 
 
 #######
@@ -126,9 +127,10 @@ RUN cd /usr/lib/ \
     && mv pbs-drmaa-1.0.19 /usr/bin/ \
     && cd /usr/bin/pbs-drmaa-1.0.19 \
     && ./configure && make \
-    && touch ~/.pbs_drmaa.conf \
-    && printf "# This is a copy of my config at Imperial:
-# Also requires 
+    && touch ~/.pbs_drmaa.conf
+
+# This errors with Dockerfile RUN but not if run inside the containuer:
+#&& printf "# PBSPro user config file:
 # See: http://apps.man.poznan.pl/trac/pbs-drmaa
 
 # pbs_drmaa.conf - Sample pbs_drmaa configuration file:
@@ -144,11 +146,11 @@ RUN cd /usr/lib/ \
     #python: '-l software=python',
     #java: '-l software=java,vmem=500mb -v PATH=/opt/sun-jdk-1.6:/usr/bin:/bin',
     #test: '-u test -q testing',
-    #}," >> ~/.pbs_drmaa.conf 
+    #}," > ~/.pbs_drmaa.conf 
 
-RUN sed -i 's/#pool_delay/pool_delay/g' ~/.pbs_drmaa.conf \
-    && sed -i 's/#pbs_home/pbs_home/g' ~/.pbs_drmaa.conf \
-    && cat ~/.pbs_drmaa.conf
+#RUN sed -i 's/#pool_delay/pool_delay/g' ~/.pbs_drmaa.conf \
+#    && sed -i 's/#pbs_home/pbs_home/g' ~/.pbs_drmaa.conf \
+#    && cat ~/.pbs_drmaa.conf
 
 RUN export DRMAA_LIBRARY_PATH=/usr/local/lib/libdrmaa.so.1
 
