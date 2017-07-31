@@ -112,8 +112,10 @@ RUN sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp
 # This errors:
 #RUN sudo /etc/init.d/pbs start \
 
-RUN . /etc/profile.d/pbs.sh 
-    && qstat -B
+RUN . /etc/profile.d/pbs.sh
+
+# Errors if pbs isn't started with above command:
+#    && qstat -B
 
 
 #######
@@ -126,7 +128,8 @@ RUN cd /usr/lib/ \
     && tar xvfz pbs-drmaa-1.0.19.tar.gz \
     && mv pbs-drmaa-1.0.19 /usr/bin/ \
     && cd /usr/bin/pbs-drmaa-1.0.19 \
-    && ./configure && make \
+    && ./configure  --with-pbs=/opt/pbs/ \
+    && make \
     && touch ~/.pbs_drmaa.conf
 
 # This errors with Dockerfile RUN but not if run inside the containuer:
