@@ -109,9 +109,10 @@ RUN sed -i 's/PBS_START_MOM=0/PBS_START_MOM=1/g' /etc/pbs.conf
 # Continue:
 RUN sudo chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp
 
-RUN sudo /etc/init.d/pbs start \
-    && . /etc/profile.d/pbs.sh \
-    && qstat -B
+# This errors:
+#RUN sudo /etc/init.d/pbs start \
+#    && . /etc/profile.d/pbs.sh \
+#    && qstat -B
 
 
 #######
