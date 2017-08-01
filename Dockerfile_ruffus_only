@@ -8,8 +8,8 @@
 # Base image
 ############
 
-FROM ubuntu
-#FROM continuumio/miniconda3
+#FROM ubuntu
+FROM continuumio/miniconda3
 # It runs on Debian GNU/Linux 8; use e.g. uname -a ; cat /etc/issue.net
 
 # Or simply run:
@@ -53,10 +53,12 @@ RUN apt-get update && apt-get install -y \
 #############################
 
 # Miniconda:
-RUN cd /usr/bin \
-    && wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
-    && bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda \
-    && export PATH="$HOME/miniconda/bin:$PATH"
+#RUN cd /usr/bin \
+#    && wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+#    && bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda \
+#    && export PATH="$HOME/miniconda/bin:$PATH"
+
+RUN conda update conda
 
 # git:
 RUN conda install -y git
@@ -67,12 +69,18 @@ RUN pip install --upgrade pip \
 
 # Create an environment for py27:
 #RUN conda create -y -n py27 python=2.7
-#    && source activate py27
+#RUN ["/bin/bash" "-c" "source activate py27"]
 
 # Create one for py35, current miniconda runs 3.6 as causes some errors for
 # repos below:
-RUN conda create -y -n py35 python=3.5 \
-    && source activate py35
+RUN conda create -y -n py35 python=3.5
+
+# Mixing RUN with source errors, use instead this form of RUN:
+# See:
+# https://stackoverflow.com/questions/20635472/using-the-run-instruction-in-a-dockerfile-with-source-does-not-work
+# https://docs.docker.com/engine/reference/builder/#run
+# https://stackoverflow.com/questions/20635472/using-the-run-instruction-in-a-dockerfile-with-source-does-not-work/45087082#45087082
+SHELL ["/bin/bash" "-c" "source activate py35"]
 
 # Base R:
 RUN conda install -y -c r r
