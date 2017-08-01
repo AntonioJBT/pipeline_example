@@ -48,6 +48,46 @@ RUN apt-get update && apt-get install -y \
 #    libblas-dev libatlas-dev liblapack-dev gfortran libpq-dev r-base-dev \
 #    libreadline-dev libmysqlclient-dev libboost-dev libsqlite3-dev
 
+
+#######
+# drmaa
+#######
+
+# Download and install drmaa C library for PBS:
+RUN cd /usr/lib/ \
+    && wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pbs-drmaa-1.0.19.tar.gz \
+    && tar xvfz pbs-drmaa-1.0.19.tar.gz \
+    && mv pbs-drmaa-1.0.19 /usr/bin/ \
+    && cd /usr/bin/pbs-drmaa-1.0.19 \
+    && ./configure  --with-pbs=/opt/pbs/ \
+    && make \
+    && touch ~/.pbs_drmaa.conf
+
+# This errors with Dockerfile RUN but not if run inside the containuer:
+#&& printf "# PBSPro user config file:
+# See: http://apps.man.poznan.pl/trac/pbs-drmaa
+
+# pbs_drmaa.conf - Sample pbs_drmaa configuration file:
+
+#pool_delay: 60,
+#cache_job_state: 60,
+#wait_thread: 1,
+#pbs_home:'/var/spool/PBS/spool/',
+#job_categories: {
+    #default: '-k n', # delete output files from execution hosts
+    #longterm: '-p -100 -l nice=5',
+    #amd64: '-l arch=amd64',
+    #python: '-l software=python',
+    #java: '-l software=java,vmem=500mb -v PATH=/opt/sun-jdk-1.6:/usr/bin:/bin',
+    #test: '-u test -q testing',
+    #}," > ~/.pbs_drmaa.conf 
+
+#RUN sed -i 's/#pool_delay/pool_delay/g' ~/.pbs_drmaa.conf \
+#    && sed -i 's/#pbs_home/pbs_home/g' ~/.pbs_drmaa.conf \
+#    && cat ~/.pbs_drmaa.conf
+
+RUN export DRMAA_LIBRARY_PATH=/usr/local/lib/libdrmaa.so.1
+
 #############################
 # Install additional packages
 #############################
@@ -67,10 +107,13 @@ RUN conda install -y git
 RUN pip install --upgrade pip \
     && pip list
 
-# Create an environment for py27:
-#RUN conda create -y -n py27 python=2.7
-#RUN ["/bin/bash" "-c" "source activate py27"]
+# Base R:
+RUN conda install -y -c r r
 
+# Create an environment for py27:
+RUN conda create -y -n py27 python=2.7
+#    && source activate py27
+#RUN ["/bin/bash" "-c" "source activate py27"]
 # Create one for py35, current miniconda runs 3.6 as causes some errors for
 # repos below:
 RUN conda create -y -n py35 python=3.5
@@ -80,16 +123,15 @@ RUN conda create -y -n py35 python=3.5
 # https://stackoverflow.com/questions/20635472/using-the-run-instruction-in-a-dockerfile-with-source-does-not-work
 # https://docs.docker.com/engine/reference/builder/#run
 # https://stackoverflow.com/questions/20635472/using-the-run-instruction-in-a-dockerfile-with-source-does-not-work/45087082#45087082
-# RUN source activate py35
+# RUN /bin/bash -c "source activate py35"
 
-# Base R:
-RUN conda install -y -c r r
+
 
 # rpy2 is not in r-essentials, Dockerfile installation with pip errors
 RUN conda install -y rpy2
 
 #########################
-# Install package to test 
+# Install package to test
 #########################
 # Install CGAT core utilities:
 
