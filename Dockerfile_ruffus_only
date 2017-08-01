@@ -80,7 +80,7 @@ RUN conda create -y -n py35 python=3.5
 # https://stackoverflow.com/questions/20635472/using-the-run-instruction-in-a-dockerfile-with-source-does-not-work
 # https://docs.docker.com/engine/reference/builder/#run
 # https://stackoverflow.com/questions/20635472/using-the-run-instruction-in-a-dockerfile-with-source-does-not-work/45087082#45087082
-SHELL ["/bin/bash" "-c" "source activate py35"]
+RUN activate py35
 
 # Base R:
 RUN conda install -y -c r r
