@@ -39,7 +39,8 @@ RUN apt-get update && apt-get install -y \
     fixincludes \
     unzip \
     vim \
-    sudo
+    sudo \
+    gcc
 
 # Additional packages installed for Ubuntu, taken from CGAT cgat example:
 # Probably not needed, didn't test though
@@ -54,6 +55,7 @@ RUN apt-get update && apt-get install -y \
 #######
 
 # Download and install drmaa C library for PBS:
+# Needs PBS installed...
 RUN cd /usr/lib/ \
     && wget https://downloads.sourceforge.net/project/pbspro-drmaa/pbs-drmaa/1.0/pbs-drmaa-1.0.19.tar.gz \
     && tar xvfz pbs-drmaa-1.0.19.tar.gz \
