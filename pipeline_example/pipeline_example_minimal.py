@@ -101,7 +101,6 @@ import os
 import sqlite3
 import shutil
 import subprocess
-import drmaa
 
 # TO DO: check CGAT_core and how to import here:
 #import CGAT.Experiment as E

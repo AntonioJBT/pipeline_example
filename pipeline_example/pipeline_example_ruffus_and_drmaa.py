@@ -102,8 +102,8 @@ import sqlite3
 
 # TO DO: check CGAT_core and how to import here:
 #import CGAT.Experiment as E
-import CGATPipeline_core.Pipeline as P
-import CGATPipeline_core.Pipeline as P
+import CGATPipelines.Pipeline as P
+import CGATPipelines.Pipeline as P
 
 # load options from the config file
 PARAMS = P.getParameters(
@@ -170,7 +170,7 @@ def loadWordCounts(infile, outfile):
 # ---------------------------------------------------
 # Tasks to test Ruffus
 
-@follows(@mkdir('ruffus_C1_results'))
+@mkdir('ruffus_C1_results')
 def testRuffus(outfile):
     ''' Runs the script a simple Ruffus test see:
         http://www.ruffus.org.uk/tutorials/new_tutorial/introduction.html
@@ -234,8 +234,8 @@ def full():
 
 # Finish and exit with docopt arguments:
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version='xxx 0.1')
-    print(arguments)
+    #arguments = docopt(__doc__, version='xxx 0.1')
+    #print(arguments)
     sys.exit(P.main(sys.argv)) # This is because of CGATPipeline.Pipeline,
                                # otherwise sys.exit(main))
 
