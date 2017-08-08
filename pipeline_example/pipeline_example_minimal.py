@@ -138,7 +138,7 @@ def connect():
 # Specific pipeline tasks
 # Run CGAT pipeline_quickstart.py template functions:
 
-@transform(("pipeline.ini"),
+@transform(("*.ini"),
            regex("(.*)\.(.*)"),
            r"\1.counts")
 def countWords(infile, outfile):
@@ -173,7 +173,7 @@ def loadWordCounts(infile, outfile):
 # Tasks to test Ruffus
 
 @mkdir('ruffus_C1_results')
-def testRuffus(outfile):
+def testRuffus():
     ''' Runs the script a simple Ruffus test with BLAST see:
         http://www.ruffus.org.uk/tutorials/new_tutorial/introduction.html
     '''

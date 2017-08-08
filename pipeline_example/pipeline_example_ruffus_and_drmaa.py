@@ -136,7 +136,7 @@ def connect():
 # Specific pipeline tasks
 # Run CGAT pipeline_quickstart.py template functions:
 
-@transform(("pipeline.ini"),
+@transform(("*.ini"),
            regex("(.*)\.(.*)"),
            r"\1.counts")
 def countWords(infile, outfile):

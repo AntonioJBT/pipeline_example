@@ -40,7 +40,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     vim \
     sudo \
-    gcc
+    gcc \
+    graphviz \
+    inkscape
 
 # Additional packages installed for Ubuntu, taken from CGAT cgat example:
 # Probably not needed, didn't test though
@@ -60,13 +62,20 @@ RUN apt-get update && apt-get install -y \
 #    && bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda \
 #    && export PATH="$HOME/miniconda/bin:$PATH"
 
+# Add conda channels:
+RUN conda config --add channels r \
+    && conda config --add channels defaults \
+    && conda config --add channels conda-forge \
+    && conda config --add channels bioconda
+
+# Update conda:
 RUN conda update -y conda
 
 # git:
 RUN conda install -y git
 
 # PIP:
-RUN pip install --upgrade pip \
+RUN pip install --upgrade pip pysam cgat \
     && pip list
 
 # Base R:
@@ -88,9 +97,14 @@ RUN conda create -y -n py35 python=3.5
 # RUN /bin/bash -c "source activate py35"
 
 
-
 # rpy2 is not in r-essentials, Dockerfile installation with pip errors
 RUN conda install -y rpy2
+
+# Install cgat tools, needed for CGATPipeline core:
+# https://github.com/CGATOxford/cgat
+# This requires py27 at the moment, use pip as above instead.
+#RUN conda install cgat-scripts
+
 
 #########################
 # Install package to test
