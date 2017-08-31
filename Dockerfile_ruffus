@@ -75,16 +75,19 @@ RUN conda update -y conda
 RUN conda install -y git
 
 # PIP:
-RUN pip install --upgrade pip pysam numpy cgat \
-    && pip list
+RUN pip install --upgrade pip \
+    && pip install --upgrade cython \
+    && pip install --upgrade pysam \
+    && pip install --upgrade numpy 
 
 # Base R:
-RUN conda install -y -c r r
+RUN conda install -y -c r r=3.3
 
 # Create an environment for py27:
 RUN conda create -y -n py27 python=2.7
 #    && source activate py27
 #RUN ["/bin/bash" "-c" "source activate py27"]
+
 # Create one for py35, current miniconda runs 3.6 as causes some errors for
 # repos below:
 RUN conda create -y -n py35 python=3.5
@@ -99,6 +102,10 @@ RUN conda create -y -n py35 python=3.5
 
 # rpy2 is not in r-essentials, Dockerfile installation with pip errors
 RUN conda install -y rpy2
+
+# Try installing cgat:
+#RUN pip install --upgrade cgat \
+#    && pip list
 
 # Install cgat tools, needed for CGATPipeline core:
 # https://github.com/CGATOxford/cgat
