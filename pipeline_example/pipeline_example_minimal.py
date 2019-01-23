@@ -151,7 +151,7 @@ def countWords(infile, outfile):
     # configuration files or variable that are declared in the calling
     # function.  For example, %(infile)s will we substituted with the
     # contents of the variable "infile".
-    P.run()
+    P.run(statement)
 
 
 @transform(countWords,
@@ -177,7 +177,7 @@ def testRuffus(outfile):
                     checkpoint;
                     python ruffus_C1_intro.py '''
 
-    P.run()
+    P.run(statement)
 
 @follows(testRuffus)
 def testRuffusWithDrmaa():
@@ -200,7 +200,7 @@ def testRuffusWithDrmaa():
     statement = ''' python ruffus_test_2_with_drmaa.py
                 '''
 
-    P.run()
+    P.run(statement)
 
 def testDrmaa(outdir):
     ''' Runs the drmaa package example scripts to test installation, see:
@@ -209,7 +209,7 @@ def testDrmaa(outdir):
 
     statement = ''' ./run_all_drmaa_examples.sh drmaa_tests
                 '''
-    P.run()
+    P.run(statement)
 
 
 # ---------------------------------------------------
