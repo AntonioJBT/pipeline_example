@@ -40,7 +40,7 @@ Requirements
 * Ruffus_
 * cgat-core_
 * python-drmaa_
-* and your HPC-specific DRMAA such as PBSPro/Torque_
+* and your HPC-specific DRMAA such as `PBSPro/Torque`_
 
 You'll need to check instructions for each tool separately. For DRMAA you'll very likely need to liaise with your system's administrator.
 
@@ -48,7 +48,7 @@ You'll need to check instructions for each tool separately. For DRMAA you'll ver
 .. _cgat-core: https://github.com/cgat-developers/cgat-core
 .. _python-drmaa: https://drmaa-python.readthedocs.io/en/latest/
 .. _DRMAA: https://en.wikipedia.org/wiki/DRMAA
-.. _PBSPro/Torque: http://apps.man.poznan.pl/trac/pbs-drmaa
+.. _`PBSPro/Torque`: http://apps.man.poznan.pl/trac/pbs-drmaa
 
 
 Installation
@@ -63,7 +63,7 @@ Clone from GitHub:
 Contribute
 ----------
 
-Please raise any issues or pull requests in the `issue tracker`_
+Please raise any issues or pull requests in the `issue tracker`_.
 
 .. _`issue tracker`: github.com/AntonioJBT/pipeline_example/issues
 
