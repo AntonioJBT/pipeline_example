@@ -1,12 +1,12 @@
 .. copy across your travis "build..." logo so that it appears in your Github page
 
-.. .. image:: https://travis-ci.org/|github_user|/|project_name|.svg?branch=master
-    :target: https://travis-ci.org/|github_user|/|project_name|
+.. .. image:: https://travis-ci.org/AntonioJBT/pipeline_example.svg?branch=master
+    :target: https://travis-ci.org/AntonioJBT/pipeline_example
 
 .. do the same for ReadtheDocs image:
 
-.. .. image:: https://readthedocs.org/projects/|project_name|/badge/?version=latest
-    :target: http://|project_name|.readthedocs.io/en/latest/?badge=latest
+.. .. image:: https://readthedocs.org/projects/pipeline_example/badge/?version=latest
+    :target: http://pipeline_example.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
 .. Zenodo gives a number instead, this needs to be put in manually here:
@@ -14,56 +14,34 @@
     :target: https://zenodo.org/badge/latestdoi/#####
 
 ################################################
-|project_name|
+pipeline_example
 ################################################
 
-
-.. The following is a modified template from RTD
-    http://www.writethedocs.org/guide/writing/beginners-guide-to-docs/#id1
-
-.. For a discussion/approach see 
-    http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
-
-|project_name| will solve your problem of xxx by doing xxx.
+A repo to keep tests for drmaa, ruffus and cgatcore.
+Scripts and examples are from the relevant packages.
+For drmaa only PBSPro has examples.
 
 
 To use
 ------
 
-.. code:: 
-    import project
-    # Get your stuff done
-    project.do_stuff()
+.. code::
 
-Features
---------
-
-- Something really useful
-- Makes things faster
+    TO DO
 
 Installation
 ------------
 
-Install |project_name| by running:
+Clone from GitHub:
 
 .. code::
     
-    install project
+    git clone https://github.com/AntonioJBT/pipelien_example.git
 
 Contribute
 ----------
 
-- Issue Tracker: github.com/|project_name|/|project_name|/issues
-- Source Code: github.com/|project_name|/|project_name|
+Please raise any issues or pull requests
+- Issue Tracker: github.com/AntonioJBT/pipeline_example/issues
 
-Support
--------
-
-If you are having issues, please let us know.
-We have a mailing list located at: |author_email|
-
-License
--------
-
-The project is licensed under the |license|.
 
