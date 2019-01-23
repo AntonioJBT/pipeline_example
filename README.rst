@@ -100,7 +100,9 @@ Example data for a CGAT pipeline
 
 Some data locations here, for more see cgat-flow_ and its `documentation <https://www.cgat.org/downloads/public/cgatpipelines/documentation/>`_.
 
-.. _cgat-flow: https://github.com/cgat-developers/cgat-flow
+cgat-flow_ tutorial::
+
+    wget https://www.cgat.org/downloads/public/cgatpipelines/Tutorial_data/tutorial_fastq.tar.gz
 
 # 201PH are ChIP-seq files from:
 
@@ -111,12 +113,7 @@ ftp://ftp.broad.mit.edu/pub/papers/chipseq/Ku2008/raw/
 - SRR446027_1.fastq.gz
 - SRR446027_2.fastq.gz
 
+.. _cgat-flow: https://github.com/cgat-developers/cgat-flow
 .. __: https://github.com/tgirke/systemPipeRdata/tree/master/inst/extdata/fastq
 .. __: http://biocluster.ucr.edu/~rkaundal/workshops/R_feb2016/ChIPseq/ChIPseq.html
-
-
-
-
-
-
 
