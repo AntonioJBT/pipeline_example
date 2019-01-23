@@ -10,7 +10,7 @@
     :alt: Documentation Status
 
 .. Zenodo gives a number instead, this needs to be put in manually here:
-.. image:: https://zenodo.org/badge/#######.svg
+.. .. image:: https://zenodo.org/badge/#######.svg
     :target: https://zenodo.org/badge/latestdoi/#####
 
 ################################################
@@ -20,7 +20,10 @@ pipeline_example
 A repo to keep tests for drmaa, ruffus and cgatcore.
 Scripts and examples are from the relevant packages.
 For drmaa only PBSPro has examples.
+This is rather incomplete.
+You can see further examples and some installation instructions for cgatcore in project_quickstart_
 
+.. _project_quickstart: git clone https://github.com/AntonioJBT/project_quickstart.git
 
 To use
 ------
@@ -42,6 +45,7 @@ Contribute
 ----------
 
 Please raise any issues or pull requests
-- Issue Tracker: github.com/AntonioJBT/pipeline_example/issues
+
+Issue Tracker: github.com/AntonioJBT/pipeline_example/issues
 
 
