@@ -46,6 +46,8 @@ You'll need to check instructions for each tool separately. For DRMAA you'll ver
 
 Note that Dockerfiles will not work per se but have installation instructions for older versions of requirements.
 
+The folder config_files contains examples of PBSPro user and system wide settings.
+
 .. _Ruffus: http://www.ruffus.org.uk/
 .. _cgat-core: https://github.com/cgat-developers/cgat-core
 .. _python-drmaa: https://drmaa-python.readthedocs.io/en/latest/
@@ -70,5 +72,37 @@ Contribute
 Please raise any issues or pull requests in the `issue tracker`_.
 
 .. _`issue tracker`: github.com/AntonioJBT/pipeline_example/issues
+
+
+Further references
+--------------------
+
+`Chapter 14: Multiprocessing, drmaa and Computation Clusters — ruffus 2.6.3 documentation`_
+
+.. _`Chapter 14: Multiprocessing, drmaa and Computation Clusters — ruffus 2.6.3 documentation`: http://www.ruffus.org.uk/tutorials/new_tutorial/multiprocessing.html
+
+`Connecting to a Cluster — Galaxy Project 19.05.dev documentation`_
+
+.. _`Connecting to a Cluster — Galaxy Project 19.05.dev documentation`: https://docs.galaxyproject.org/en/latest/admin/cluster.html
+
+
+Example data for a CGAT pipeline
+-----------------------------------
+
+201PH are ChIP-seq files from:
+
+ftp://ftp.broad.mit.edu/pub/papers/chipseq/Ku2008/raw/
+
+Other ChIP-seq files are:
+
+http://biocluster.ucr.edu/~rkaundal/workshops/R_feb2016/ChIPseq/ChIPseq.html
+
+from:
+
+https://github.com/tgirke/systemPipeRdata/tree/master/inst/extdata/fastq
+
+- SRR446027_1.fastq.gz
+- SRR446027_2.fastq.gz
+
 
 
