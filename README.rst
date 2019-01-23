@@ -48,12 +48,14 @@ Note that Dockerfiles will not work per se but have installation instructions fo
 
 The folder config_files contains examples of PBSPro user and system wide settings.
 
+Note that an updated version with a pipeline example is available, follow the `cgat-core docs`_.
+
 .. _Ruffus: http://www.ruffus.org.uk/
 .. _cgat-core: https://github.com/cgat-developers/cgat-core
 .. _python-drmaa: https://drmaa-python.readthedocs.io/en/latest/
 .. _DRMAA: https://en.wikipedia.org/wiki/DRMAA
 .. _`PBSPro/Torque`: http://apps.man.poznan.pl/trac/pbs-drmaa
-
+.. _`cgat-core docs`: https://cgat-core.readthedocs.io/en/latest/getting_started/Examples.html
 
 Note that once the system DRMAA library is installed, you'll need to set an environment variable::
     
