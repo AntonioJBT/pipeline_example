@@ -106,16 +106,17 @@ Some data locations here, for more see cgat-flow_ and its `documentation <https:
 
 ftp://ftp.broad.mit.edu/pub/papers/chipseq/Ku2008/raw/
 
-# Other ChIP-seq files are:
-
-http://biocluster.ucr.edu/~rkaundal/workshops/R_feb2016/ChIPseq/ChIPseq.html
-
-from:
-
-https://github.com/tgirke/systemPipeRdata/tree/master/inst/extdata/fastq
+# Other ChIP-seq files are from here__ (see `this link`__):
 
 - SRR446027_1.fastq.gz
 - SRR446027_2.fastq.gz
+
+.. __: https://github.com/tgirke/systemPipeRdata/tree/master/inst/extdata/fastq
+.. __: http://biocluster.ucr.edu/~rkaundal/workshops/R_feb2016/ChIPseq/ChIPseq.html
+
+
+
+
 
 
 
