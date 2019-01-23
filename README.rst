@@ -55,6 +55,14 @@ The folder config_files contains examples of PBSPro user and system wide setting
 .. _`PBSPro/Torque`: http://apps.man.poznan.pl/trac/pbs-drmaa
 
 
+Note that once the system DRMAA library is installed, you'll need to set an environment variable::
+    
+    export DRMAA_LIBRARY_PATH=/<full-path>/libdrmaa.so
+    # such as:
+    export DRMAA_LIBRARY_PATH=/usr/local/lib/libdrmaa.so.1
+    
+    
+
 Installation
 ------------
 
@@ -85,15 +93,20 @@ Further references
 
 .. _`Connecting to a Cluster — Galaxy Project 19.05.dev documentation`: https://docs.galaxyproject.org/en/latest/admin/cluster.html
 
+cgat-flow_, a set of ruffus based pipelines.
 
 Example data for a CGAT pipeline
 -----------------------------------
 
-201PH are ChIP-seq files from:
+Some data locations here, for more see cgat-flow_ and its `documentation <https://www.cgat.org/downloads/public/cgatpipelines/documentation/>`_.
+
+.. _cgat-flow: https://github.com/cgat-developers/cgat-flow
+
+# 201PH are ChIP-seq files from:
 
 ftp://ftp.broad.mit.edu/pub/papers/chipseq/Ku2008/raw/
 
-Other ChIP-seq files are:
+# Other ChIP-seq files are:
 
 http://biocluster.ucr.edu/~rkaundal/workshops/R_feb2016/ChIPseq/ChIPseq.html
 
