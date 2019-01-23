@@ -17,20 +17,39 @@
 pipeline_example
 ################################################
 
-A repo to keep tests for drmaa, ruffus and cgatcore.
+A repo to keep tests for drmaa, ruffus and cgat-core.
 Scripts and examples are from the relevant packages.
 For drmaa only PBSPro has examples.
 This is rather incomplete.
-You can see further examples and some installation instructions for cgatcore in project_quickstart_
+You can see further examples and some installation instructions for cgat-core_ in `project_quickstart`_.
 
-.. _project_quickstart: git clone https://github.com/AntonioJBT/project_quickstart.git
+.. _`project_quickstart`: https://github.com/AntonioJBT/project_quickstart
 
 To use
 ------
 
+Test whether programs are running as expected for ruffus, ruffus with drmaa, and cgatcore.
+
 .. code::
 
     TO DO
+
+Requirements
+-------------
+
+* Ruffus_
+* cgat-core_
+* python-drmaa_
+* and your HPC-specific DRMAA such as PBSPro/Torque_
+
+You'll need to check instructions for each tool separately. For DRMAA you'll very likely need to liaise with your system's administrator.
+
+.. _Ruffus: http://www.ruffus.org.uk/
+.. _cgat-core: https://github.com/cgat-developers/cgat-core
+.. _python-drmaa: https://drmaa-python.readthedocs.io/en/latest/
+.. _DRMAA: https://en.wikipedia.org/wiki/DRMAA
+.. _PBSPro/Torque: http://apps.man.poznan.pl/trac/pbs-drmaa
+
 
 Installation
 ------------
@@ -44,8 +63,8 @@ Clone from GitHub:
 Contribute
 ----------
 
-Please raise any issues or pull requests
+Please raise any issues or pull requests in the `issue tracker`_
 
-Issue Tracker: github.com/AntonioJBT/pipeline_example/issues
+.. _`issue tracker`: github.com/AntonioJBT/pipeline_example/issues
 
 
