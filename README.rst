@@ -25,14 +25,6 @@ You can see further examples of pipelines and some installation instructions in 
 
 .. _`project_quickstart`: https://github.com/AntonioJBT/project_quickstart
 
-To use
-------
-
-Test whether programs are running as expected for ruffus, ruffus with drmaa, and cgatcore.
-
-.. code::
-
-    TO DO
 
 Requirements
 -------------
@@ -44,11 +36,9 @@ Requirements
 
 You'll need to check instructions for each tool separately. For DRMAA you'll very likely need to liaise with your system's administrator.
 
-Note that Dockerfiles will not work per se but have installation instructions for older versions of requirements.
+The folder Docker_and_config_file_examples contains examples of PBSPro user and system wide settings. Note that Dockerfiles will not work per se but have installation instructions for older versions of requirements.
 
-The folder config_files contains examples of PBSPro user and system wide settings.
-
-Note that an updated version with a pipeline example is available, follow the `cgat-core docs`_.
+An updated version with a pipeline example is available, follow the `cgat-core docs`_.
 
 .. _Ruffus: http://www.ruffus.org.uk/
 .. _cgat-core: https://github.com/cgat-developers/cgat-core
@@ -58,11 +48,10 @@ Note that an updated version with a pipeline example is available, follow the `c
 .. _`cgat-core docs`: https://cgat-core.readthedocs.io/en/latest/getting_started/Examples.html
 
 Note that once the system DRMAA library is installed, you'll need to set an environment variable::
-    
+
     export DRMAA_LIBRARY_PATH=/<full-path>/libdrmaa.so
     # such as:
     export DRMAA_LIBRARY_PATH=/usr/local/lib/libdrmaa.so.1
-    
     
 
 Installation
@@ -74,38 +63,28 @@ Clone from GitHub:
     
     git clone https://github.com/AntonioJBT/pipelien_example.git
 
-Note that Dockerfiles will not work per se but have installation instructions.
 
-Contribute
-----------
+Usage
+------
 
-Please raise any issues or pull requests in the `issue tracker`_.
+Test whether programs are running as expected for ruffus, ruffus with drmaa, and cgatcore:
 
-.. _`issue tracker`: github.com/AntonioJBT/pipeline_example/issues
+.. code::
 
+    TO DO
 
-Further references
---------------------
+Further references and example data for a CGAT pipeline
+----------------------------------------------------------
 
-`Chapter 14: Multiprocessing, drmaa and Computation Clusters — ruffus 2.6.3 documentation`_
-
-.. _`Chapter 14: Multiprocessing, drmaa and Computation Clusters — ruffus 2.6.3 documentation`: http://www.ruffus.org.uk/tutorials/new_tutorial/multiprocessing.html
-
-`Connecting to a Cluster — Galaxy Project 19.05.dev documentation`_
-
-.. _`Connecting to a Cluster — Galaxy Project 19.05.dev documentation`: https://docs.galaxyproject.org/en/latest/admin/cluster.html
-
-cgat-flow_, a set of ruffus based pipelines.
-
-Example data for a CGAT pipeline
------------------------------------
-
-Some data locations here, for more see cgat-flow_ and its `documentation <https://www.cgat.org/downloads/public/cgatpipelines/documentation/>`_.
-
-See also tutorials for cgat-flow_ (here__) and `cgat-core pipeline example`_.
+See first the tutorials for cgat-flow (here__) and `cgat-core pipeline example`_.
 
 .. __: https://www.cgat.org/downloads/public/cgatpipelines/documentation/Tutorials.html
 .. _`cgat-core pipeline example`: https://cgat-core.readthedocs.io/en/latest/getting_started/Tutorial.html
+
+Some data locations can be found here, for more see cgat-flow's `documentation <https://www.cgat.org/downloads/public/cgatpipelines/documentation/>`_.
+
+Example data
+=============
 
 # 201PH are ChIP-seq files from:
 
@@ -119,4 +98,25 @@ ftp://ftp.broad.mit.edu/pub/papers/chipseq/Ku2008/raw/
 .. _cgat-flow: https://github.com/cgat-developers/cgat-flow
 .. __: https://github.com/tgirke/systemPipeRdata/tree/master/inst/extdata/fastq
 .. __: http://biocluster.ucr.edu/~rkaundal/workshops/R_feb2016/ChIPseq/ChIPseq.html
+
+
+Further references
+======================
+
+cgat-flow_, a set of ruffus based pipelines.
+
+`Chapter 14: Multiprocessing, drmaa and Computation Clusters — ruffus 2.6.3 documentation`_
+
+.. _`Chapter 14: Multiprocessing, drmaa and Computation Clusters — ruffus 2.6.3 documentation`: http://www.ruffus.org.uk/tutorials/new_tutorial/multiprocessing.html
+
+`Connecting to a Cluster — Galaxy Project 19.05.dev documentation`_
+
+.. _`Connecting to a Cluster — Galaxy Project 19.05.dev documentation`: https://docs.galaxyproject.org/en/latest/admin/cluster.html
+
+Contribute
+----------
+
+Please raise any issues or pull requests in the `issue tracker`_.
+
+.. _`issue tracker`: github.com/AntonioJBT/pipeline_example/issues
 
