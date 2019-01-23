@@ -4,19 +4,13 @@
 ######################################################
 
 # General options:
-[general]
-
-author_name =
-
-project_name =
-
-licence = 
-
-version =
+general:
+    author_name:
+    project_name:
+    licence:
+    version:
 
 # Pipeline specific options:
-[pipeline_template]
-
-parameter_x = 
-
-parameter_y = 
+pipeline_template:
+    parameter_x: 
+    parameter_y: 

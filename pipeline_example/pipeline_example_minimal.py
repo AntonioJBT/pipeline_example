@@ -10,7 +10,6 @@ pipeline_name
 Overview
 ========
 
-|long_description|
 
 
 Purpose
@@ -102,16 +101,15 @@ import sqlite3
 import shutil
 import subprocess
 
-# TO DO: check CGAT_core and how to import here:
-#import CGAT.Experiment as E
-import CGATPipelines.Pipeline as P
-import CGATPipelines.Pipeline as P
+import cgatcore.experiment as E
+from cgatcore import pipeline as P
+import cgatcore.iotools as iotools
 
 # load options from the config file
-PARAMS = P.getParameters(
-    ["%s/pipeline.ini" % os.path.splitext(__file__)[0],
-     "../pipeline.ini",
-     "pipeline.ini"])
+PARAMS = P.get_parameters(
+        ["%s/pipeline.yml" % os.path.splitext(__file__)[0],
+            "../pipeline.yml",
+            "pipeline.yml"])
 
 # -----------------------------------------------
 # Utility functions
