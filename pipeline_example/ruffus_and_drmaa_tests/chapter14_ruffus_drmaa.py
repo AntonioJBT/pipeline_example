@@ -1,6 +1,6 @@
 #!/usr/bin/python
 job_queue_name    = ""
-job_other_options = "-P YOUR_PROJECT_NAME_GOES_HERE"
+job_other_options = ""
 
 from ruffus import *
 from ruffus.drmaa_wrapper import run_job, error_drmaa_job
@@ -43,7 +43,13 @@ def create_test_files(output_file, logger, logger_mutex):
     except error_drmaa_job as err:
         raise Exception("\n".join(map(str,
                             "Failed to run:",
-                            cmd, err, stdout_res, stderr_res)))
+                            cmd,
+                            err,
+                            stdout_res,
+                            stderr_res
+                            )
+                            )
+                            )
 
 
 if __name__ == '__main__':

@@ -61,8 +61,8 @@ Create a testing directory and clone from GitHub:
 
 .. code::
     
-    mkdir test_cgat_drmaa ;
-    cd test_cgat_drmaa ;
+    mkdir test_cgat_drmaa
+    cd test_cgat_drmaa
     git clone https://github.com/AntonioJBT/pipeline_example.git
 
 Test whether programs are running as expected for ruffus, ruffus with drmaa, and cgatcore:
@@ -79,7 +79,7 @@ Test whether programs are running as expected for ruffus, ruffus with drmaa, and
     python pipeline_example/pipeline_example/ruffus_and_drmaa_tests/drmaa_example1.py
     
     # Ruffus and drmaa:
-    python pipeline_example/pipeline_example/ruffus_and_drmaa_tests/ruffus_test_with_drmaa.py
+    #python pipeline_example/pipeline_example/ruffus_and_drmaa_tests/chapter14_ruffus_drmaa.py
 
     # A standard PBSPro qsub script (your system may be different):
     qsub pipeline_example/pipeline_example/ruffus_and_drmaa_tests/standard_PBS_qsub.sh
@@ -88,7 +88,7 @@ Test whether programs are running as expected for ruffus, ruffus with drmaa, and
 
     # Check a cgat-core pipeline:
     python pipeline_example/pipeline_example/pipeline_example_minimal.py --help    
-    ln -s pipeline_example/pipeline_example/pipeline_example_ruffus_and_drmaa.yml .
+    ln -s pipeline_example/pipeline_example/pipeline_example_minimal.yml .
     # (the previous command would usually use the cgat-core config option)
     python pipeline_example/pipeline_example/pipeline_example_minimal.py show full
     python pipeline_example/pipeline_example/pipeline_example_minimal.py printconfig

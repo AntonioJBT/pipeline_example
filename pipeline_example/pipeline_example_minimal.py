@@ -10,6 +10,7 @@ pipeline_name
 Overview
 ========
 
+|long_description|
 
 
 Purpose
@@ -52,7 +53,7 @@ Configuration
 This pipeline is built using a Ruffus/CGAT approach. You need to have Python, Ruffus, CGAT core tools and any other specific dependencies needed fo this script.
 
 A configuration file was created at the same time as this script
-(pipeline_template.ini).
+(pipeline_template.yml).
 Use this to extract any arbitrary parameters that could be changed in future
 re-runs of the pipeline.
 
@@ -98,8 +99,6 @@ from ruffus import *
 import sys
 import os
 import sqlite3
-import shutil
-import subprocess
 
 import cgatcore.experiment as E
 from cgatcore import pipeline as P
@@ -136,7 +135,7 @@ def connect():
 # Specific pipeline tasks
 # Run CGAT pipeline_quickstart.py template functions:
 
-@transform(("*.ini"),
+@transform(("*.yml"),
            regex("(.*)\.(.*)"),
            r"\1.counts")
 def countWords(infile, outfile):
@@ -158,7 +157,7 @@ def countWords(infile, outfile):
     # contents of the variable "infile".
     P.run()
 
-@follows(countWords)
+
 @transform(countWords,
            suffix(".counts"),
            "_counts.load")
@@ -169,10 +168,11 @@ def loadWordCounts(infile, outfile):
 
 # ---------------------------------------------------
 # Tasks to test Ruffus
+# not run at the moment, add to task full() if needed
 
 @mkdir('ruffus_C1_results')
-def testRuffus():
-    ''' Runs the script a simple Ruffus test with BLAST see:
+def testRuffus(outfile):
+    ''' Runs the script a simple Ruffus test see:
         http://www.ruffus.org.uk/tutorials/new_tutorial/introduction.html
     '''
 
@@ -184,33 +184,10 @@ def testRuffus():
     P.run()
 
 @follows(testRuffus)
-def checkDependencies():
-    ''' Runs C2 Ruffus manual BLAST example pipeline:
-        http://www.ruffus.org.uk/examples/bioinformatics/index.html
-        You need blastall and formatdb installed. You can get these here:
-        https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download
-        Or use conda to install blast+ which includes the above:
-        https://anaconda.org/biocore/blast-plus
+def testRuffusWithDrmaa():
+    ''' Runs two scripts to test Ruffus and drmaa libraries
     '''
 
-    # Check conda and blast+ are installed, otherwise exit for conda and
-    # install for blast+:
-    if not str('conda') in shutil.which('conda'):
-        E.info('Exiting, conda not installed')
-        sys.exit()
-    elif str('conda') in shutil.which('conda'):
-        E.info('conda installed')
-    if not str('blastp') in shutil.which('blastp'):
-        try:
-            subprocess.run('conda install -c biococonda blast', shell=True, check=True)
-        except OSError:
-            E.info('conda failed to install blast try manually.')
-            sys.exit()
-    if not str('makeblastdb') in shutil.which('makeblastdb'):
-        E.info('conda failed to install blast try manually.')
-        sys.exit()
-
-    # Print out some basic info to the log file:
     statement = ''' echo 'Test without full path:';
                     checkpoint;
                     which python;
@@ -218,69 +195,30 @@ def checkDependencies():
                     python --version;
                     checkpoint;
                     which R;
-                    checkpoint;
+                    checkpoint
                 '''
+
+    statement = ''' python ruffus_test_with_drmaa.py
+                '''
+
+    statement = ''' python ruffus_test_2_with_drmaa.py
+                '''
+
     P.run()
 
-@follows(checkDependencies)
-def getFasta():
-    ''' Download a protein fasta file and copy some of its lines for searching
+def testDrmaa(outdir):
+    ''' Runs the drmaa package example scripts to test installation, see:
+        https://github.com/pygridtools/drmaa-python
     '''
 
-    # Download the human refseq sequence file and format the ncbi database:
-    statement = ''' wget ftp://ftp.ncbi.nih.gov/refseq/H_sapiens/mRNA_Prot/human.1.protein.faa.gz :
-                    checkpoint;
-                    gunzip human.1.protein.faa.gz;
-                    checkpoint;
-                    sed -n '2p;10p;20p;40p;50p' human.1.protein.faa > original.fa;
-                    checkpoint;
+    statement = ''' ./run_all_drmaa_examples.sh drmaa_tests
                 '''
     P.run()
 
-
-
-# The following is just copied from Ruffus:
-# http://www.ruffus.org.uk/examples/bioinformatics/part1_code.html#examples-bioinformatics-part1-code
-# but modified for the CGAT Pipeline module
-original_fasta = "original.fa"
-database_file  = "human.1.protein.faa"
-
-@follows(getFasta)
-@split(original_fasta, "*.segment")
-def splitFasta (seqFile, segments):
-    """Split sequence file into
-       as many fragments as appropriate
-       depending on the size of original_fasta"""
-    current_file_index = 0
-    for line in open(original_fasta):
-        #
-        # start a new file for each accession line
-        #
-        if line[0] == '>':
-            current_file_index += 1
-            current_file = open("%d.segment" % current_file_index, "w")
-        current_file.write(line)
-
-@follows(splitFasta)
-@transform(splitFasta, suffix(".segment"), ".blastResult")
-def runBlast(seqFile,  blastResultFile):
-    """Run blast"""
-    os.system("blastp -d %s -i %s > %s" %
-                (database_file, seqFile, blastResultFile))
-
-
-@follows(runBlast)
-@merge(runBlast, "final.blast_results")
-def combineBlastResults (blastResultFiles, combinedBlastResultFile):
-    """Combine blast results"""
-    output_file = open(combinedBlastResultFile,  "w")
-    for i in blastResultFiles:
-        output_file.write(open(i).read())
 
 # ---------------------------------------------------
 # Generic pipeline tasks
-@follows(countWords,
-        combineBlastResults)
+@follows(loadWordCounts)
 def full():
     pass
 
@@ -294,12 +232,6 @@ def full():
 #    E.info("starting report build process from scratch")
 #    P.run_report(clean=True)
 
-# Finish and exit with docopt arguments:
-#if __name__ == '__main__':
-#    arguments = docopt(__doc__, version='xxx 0.1')
-#    print(arguments)
-#    sys.exit(P.main(sys.argv)) # This is because of CGATPipeline.Pipeline,
-                               # otherwise sys.exit(main))
-
-if __name__ == "__main__":
+# Finish and exit:
+if __name__ == '__main__':
     sys.exit(P.main(sys.argv))
