@@ -122,8 +122,7 @@ def connect():
     '''
 
     dbh = sqlite3.connect(PARAMS["database_name"])
-    statement = '''ATTACH DATABASE '%s' as annotations''' % (
-        PARAMS["annotations_database"])
+    statement = '''ATTACH DATABASE '%s' as annotations''' % (PARAMS["annotations_database"])
     cc = dbh.cursor()
     cc.execute(statement)
     cc.close()
@@ -143,10 +142,7 @@ def countWords(infile, outfile):
        This function is a copy of pipeline_quickstart.py at CGAT'''
 
     # the command line statement we want to execute
-    statement = '''awk 'BEGIN { printf("word\\tfreq\\n"); }
-    {for (i = 1; i <= NF; i++) freq[$i]++}
-    END { for (word in freq) printf "%%s\\t%%d\\n", word, freq[word] }'
-    < %(infile)s > %(outfile)s'''
+    statement = '''awk 'BEGIN { printf("word\\tfreq\\n"); } {for (i = 1; i <= NF; i++) freq[$i]++} END { for (word in freq) printf "%%s\\t%%d\\n", word, freq[word] }' < %(infile)s > %(outfile)s'''
 
     # execute command in variable statement.
     # The command will be sent to the cluster (by default, but this can be
