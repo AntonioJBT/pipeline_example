@@ -18,10 +18,10 @@ pipeline_example
 ################################################
 
 A repo to keep tests for drmaa, ruffus and cgat-core.
-Scripts and examples are from the relevant packages.
-For drmaa only PBSPro has examples.
-This is rather incomplete.
-You can see further examples and some installation instructions for cgat-core_ in `project_quickstart`_.
+
+Scripts and examples are from the relevant packages. For drmaa, only PBSPro has examples.
+
+You can see further examples of pipelines and some installation instructions in cgat-core_ and `project_quickstart`_.
 
 .. _`project_quickstart`: https://github.com/AntonioJBT/project_quickstart
 
