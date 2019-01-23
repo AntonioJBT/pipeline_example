@@ -44,6 +44,8 @@ Requirements
 
 You'll need to check instructions for each tool separately. For DRMAA you'll very likely need to liaise with your system's administrator.
 
+Note that Dockerfiles will not work per se but have installation instructions for older versions of requirements.
+
 .. _Ruffus: http://www.ruffus.org.uk/
 .. _cgat-core: https://github.com/cgat-developers/cgat-core
 .. _python-drmaa: https://drmaa-python.readthedocs.io/en/latest/
