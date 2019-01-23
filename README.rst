@@ -102,9 +102,10 @@ Example data for a CGAT pipeline
 
 Some data locations here, for more see cgat-flow_ and its `documentation <https://www.cgat.org/downloads/public/cgatpipelines/documentation/>`_.
 
-cgat-flow_ tutorial::
+See also tutorials for cgat-flow_ (here__) and `cgat-core pipeline example`_.
 
-    wget https://www.cgat.org/downloads/public/cgatpipelines/Tutorial_data/tutorial_fastq.tar.gz
+.. __: https://www.cgat.org/downloads/public/cgatpipelines/documentation/Tutorials.html
+.. _`cgat-core pipeline example`: https://cgat-core.readthedocs.io/en/latest/getting_started/Tutorial.html
 
 # 201PH are ChIP-seq files from:
 
