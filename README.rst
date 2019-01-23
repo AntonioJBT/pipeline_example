@@ -60,6 +60,8 @@ Clone from GitHub:
     
     git clone https://github.com/AntonioJBT/pipelien_example.git
 
+Note that Dockerfiles will not work per se but have installation instructions.
+
 Contribute
 ----------
 
