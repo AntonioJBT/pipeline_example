@@ -112,8 +112,9 @@ Test whether programs are running as expected for ruffus, ruffus with drmaa, and
     # On the cluster (you need to setup the appropriate configuration for your cluster):
     # Clean up previous test:
     rm -rf pipeline.log pipeline_example_minimal_counts.load csvdb pipeline_example_minimal.counts
-    # Run on the cluster:
-    python pipeline_example/pipeline_example/pipeline_example_minimal.py make full
+    # Run on the cluster, scripts are short but you may still want to nohup it:
+    nohup python pipeline_example/pipeline_example/pipeline_example_minimal.py make full &
+    tail -f nohup.out
     # Check the outputs
 
 
