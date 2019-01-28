@@ -73,7 +73,6 @@ Create a testing directory and clone from GitHub:
 
 Test whether programs are running as expected for ruffus, ruffus with drmaa, and cgatcore:
 
-(this is incomplete...)
 
 .. code::
 
@@ -109,7 +108,7 @@ Test whether programs are running as expected for ruffus, ruffus with drmaa, and
     sqlite> SELECT * FROM pipeline_example_minimal_counts;
     sqlite> .exit
 
-    # On the cluster (you need to setup the appropriate configuration for your cluster):
+    # On the cluster (you need to setup the appropriate configuration for your cluster)
     # Clean up previous test:
     rm -rf pipeline.log pipeline_example_minimal_counts.load csvdb pipeline_example_minimal.counts
     # Run on the cluster, scripts are short but you may still want to nohup it:
@@ -117,6 +116,9 @@ Test whether programs are running as expected for ruffus, ruffus with drmaa, and
     tail -f nohup.out
     # Check the outputs
 
+If submitting to a cluster consider using a ~/.cgat.yml file (`see an example`_) for configuration.
+
+.. _`see an example`: https://github.com/AntonioJBT/pipeline_example/blob/master/Docker_and_config_file_examples/cgat.yml
 
 Further references and example data for a CGAT pipeline
 ----------------------------------------------------------
