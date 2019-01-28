@@ -92,7 +92,4 @@ cluster:
 
 report:
     threads: 2
-
-    # At Imperial fill up nodes with multiples of 12, 16 or 20 per node, otherwise resource may not exist and jobs will hang (?)
-    # Currently this .cgat file is overridden by the .ini file in the wd.
 #######################
