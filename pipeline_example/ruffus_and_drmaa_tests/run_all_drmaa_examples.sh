@@ -1,16 +1,38 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
+###########################
 # Run as eg:
 # bash run_all_drmaa_examples.sh scripts_dir
 # scripts_dir must be the full path
+###########################
 
-set -e
+###########################
+# Set bash script options
 
+# exit when a command fails:
+set -o errexit
+
+# exit if any pipe commands fail:
+set -o pipefail
+
+# exit if there are undeclared variables:
+set -o nounset
+
+# trace what gets executed:
+set -o xtrace
+set -o errtrace
+###########################
+
+###########################
+# Variables to substitute:
 out_dir=all_drmaa_examples
 scripts_dir=${1}
-
 #DIR_OUT="results_ruffus_module.dir/"
 #DIR_OUT="results_miniconda_no_bashrc.dir/"
+###########################
+
+###########################
+# Run command:
 
 echo 'Creating output directory'
 mkdir ${out_dir}
@@ -43,3 +65,4 @@ echo 'Finished running.'
 echo 'Output files in'
 echo ${out_dir}
 echo 'Logs of output are in example.out'
+###########################
