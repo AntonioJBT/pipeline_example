@@ -1,0 +1,98 @@
+#######################
+## CGAT config file, see:
+# https://github.com/CGATOxford/cgat/issues/86
+
+# https://github.com/CGATOxford/CGATPipelines/pull/237
+#We need a consistent approach. Should this be the order, (later overwriting previous):
+
+#1    Hardcoded defaults
+#2    System cgat.ini
+#3    User cgat.ini
+#4    job_memory, job_threads, job_options specified in task
+#5    cluster_options specified on command line
+
+# Note that:
+# user's bashrc is loaded on work nodes.
+# Also note, the file
+# src/CGATPipelines/scripts/bashrc.cgat
+# is read as well, if semi-colons are not added at the end of each command, the error:
+
+# -bash: module: line 1: syntax error: unexpected end of file
+# -bash: error importing function definition for `BASH_FUNC_module'
+
+# appears; unset -f module does not cause this here. The error I think has no consequence though.
+
+# For PBSPro as in torque, mem is used and not mem_free
+
+## Set up environment with loaded packages. This errors if run here as configparser expects a header.
+#######################
+
+
+#######################
+## Set-up overall options needed:
+
+general:
+# options need the first part dropped, eg: 'cluster_options' is specified as 'options'
+    tmpdir: /tmp
+
+    shared_tmpdir: /tmp
+
+cluster:
+# set python src/pipeline_xxx.py -v3 -f -p 'N' at the command line for the number of processes to use
+# cluster options:
+#    --no-cluster, --local
+#                        do no use cluster - run locally [False].
+#    --cluster-priority=CLUSTER_PRIORITY
+#                        set job priority on cluster [none].
+#    --cluster-queue-manager=CLUSTER_QUEUE_MANAGER
+#                        set cluster queue manager [none].
+#    --cluster-queue=CLUSTER_QUEUE
+#                        set cluster queue [none].
+#    --cluster-memory-resource=CLUSTER_MEMORY_RESOURCE
+#                        set cluster memory resource [none].
+#    --cluster-memory-default=CLUSTER_MEMORY_DEFAULT
+#                        set cluster memory default [none].
+#    --cluster-num-jobs=CLUSTER_NUM_JOBS
+#                        number of jobs to submit to the queue execute in
+#                        parallel [none].
+#    --cluster-parallel=CLUSTER_PARALLEL_ENVIRONMENT
+#                        name of the parallel environment to use [none].
+#    --cluster-options=CLUSTER_OPTIONS
+#                       additional options for cluster jobs, passed on to
+#                        queuing system [none].
+
+    #memory_default: 5G
+    memory_resource: mem
+    #num_jobs: 100
+
+    options: -l walltime=00:10:00 -l select=1:ncpus=8:mem=1gb
+    # See job sizing instructions at:
+    # https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/computing/high-throughput-computing/job-sizing/
+    # mem and select conflict if specified separately.
+    #PBS -lselect=N:ncpus=X:mem=Ygb
+    ##PBS -l walltime=00:10:00
+    ##PBS -l select=1:ncpus=8:mem=1gb
+
+    # $TMPDIR points to each node's memory. If large files need to be transferred, specify as eg:
+    ##PBS -l select=NN:ncpus=MM:tmpspace=500gb
+    # This tells the batch manager to use NN nodes with MM cpus and with 
+    # at least 500gb of free space on the temporary directory
+
+    # At Imperial select=xxx should trigger OpenMP. MPI jobs require mpiexec
+    # For MPI jobs at Imperial see:
+    # # https://wiki.imperial.ac.uk/display/HPC/MPI+Jobs
+
+    queue_manager: pbspro
+
+    queue: NONE
+    #med-bio
+
+    parallel_environment:  ""
+    # This is the name of the queue (?) eg at WIMM 'dedicated'
+
+report:
+    threads: 2
+
+    # At Imperial fill up nodes with multiples of 12, 16 or 20 per node, otherwise resource may not exist and jobs will hang (?)
+    # Currently this .cgat file is overridden by the .ini file in the wd.
+#######################

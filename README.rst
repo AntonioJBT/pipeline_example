@@ -32,9 +32,15 @@ Requirements
 * Ruffus_
 * cgat-core_
 * python-drmaa_
-* and your HPC-specific DRMAA such as `PBSPro/Torque`_
+* and your HPC-specific DRMAA_ such as `PBSPro/Torque`_
 
-You'll need to check instructions for each tool separately. For DRMAA you'll very likely need to liaise with your system's administrator.
+.. code-block::
+
+    conda install cgat-core
+
+Hopefully that's all you need for Ruffus, cgat-core and python-drmaa. Best to check instructions for each tool however. For DRMAA you'll very likely need to liaise with your system's administrator.
+
+Note that currently conda-forge has "drmaa" v0.7.9 and "python-drmaa" v0.7.6
 
 The folder Docker_and_config_file_examples contains examples of PBSPro user and system wide settings. Note that Dockerfiles will not work per se but have installation instructions for older versions of requirements.
 
@@ -43,7 +49,7 @@ An updated version with a pipeline example is available, follow the `cgat-core d
 .. _Ruffus: http://www.ruffus.org.uk/
 .. _cgat-core: https://github.com/cgat-developers/cgat-core
 .. _python-drmaa: https://drmaa-python.readthedocs.io/en/latest/
-.. _DRMAA: https://en.wikipedia.org/wiki/DRMAA
+.. _DRMAA: https://www.drmaa.org/
 .. _`PBSPro/Torque`: http://apps.man.poznan.pl/trac/pbs-drmaa
 .. _`cgat-core docs`: https://cgat-core.readthedocs.io/en/latest/getting_started/Examples.html
 
@@ -67,7 +73,6 @@ Create a testing directory and clone from GitHub:
 
 Test whether programs are running as expected for ruffus, ruffus with drmaa, and cgatcore:
 
-(this is incomplete...)
 
 .. code::
 
@@ -103,13 +108,17 @@ Test whether programs are running as expected for ruffus, ruffus with drmaa, and
     sqlite> SELECT * FROM pipeline_example_minimal_counts;
     sqlite> .exit
 
-    # On the cluster (you need to setup the appropriate configuration for your cluster):
+    # On the cluster (you need to setup the appropriate configuration for your cluster)
     # Clean up previous test:
     rm -rf pipeline.log pipeline_example_minimal_counts.load csvdb pipeline_example_minimal.counts
-    # Run on the cluster:
-    python pipeline_example/pipeline_example/pipeline_example_minimal.py make full
+    # Run on the cluster, scripts are short but you may still want to nohup it:
+    nohup python pipeline_example/pipeline_example/pipeline_example_minimal.py make full &
+    tail -f nohup.out
     # Check the outputs
 
+If submitting to a cluster consider using a ~/.cgat.yml file (`see an example`_) for configuration.
+
+.. _`see an example`: https://github.com/AntonioJBT/pipeline_example/blob/master/Docker_and_config_file_examples/cgat.yml
 
 Further references and example data for a CGAT pipeline
 ----------------------------------------------------------
@@ -150,6 +159,10 @@ cgat-flow_, a set of ruffus based pipelines.
 `Connecting to a Cluster — Galaxy Project 19.05.dev documentation`_
 
 .. _`Connecting to a Cluster — Galaxy Project 19.05.dev documentation`: https://docs.galaxyproject.org/en/latest/admin/cluster.html
+
+`DRMAA Wikipedia page`_
+
+.. _`DRMAA Wikipedia page`: https://en.wikipedia.org/wiki/DRMAA
 
 Contribute
 ----------
