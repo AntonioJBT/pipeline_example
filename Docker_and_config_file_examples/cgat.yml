@@ -30,12 +30,12 @@
 
 #######################
 ## Set-up overall options needed:
+# Note the priorities in which options are read. These may conflict if there are eg two 'general' options
 
-general:
+#general:
 # options need the first part dropped, eg: 'cluster_options' is specified as 'options'
-    tmpdir: /tmp
-
-    shared_tmpdir: /tmp
+#    tmpdir: /tmp
+#    shared_tmpdir: /tmp
 
 cluster:
 # set python src/pipeline_xxx.py -v3 -f -p 'N' at the command line for the number of processes to use
@@ -84,8 +84,7 @@ cluster:
 
     queue_manager: pbspro
 
-    queue: NONE
-    #med-bio
+    queue: NONE #med-bio
 
     parallel_environment:  ""
     # This is the name of the queue (?) eg at WIMM 'dedicated'
