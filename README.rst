@@ -36,7 +36,7 @@ Requirements
 
 .. code-block::
 
-    conda install cgat-core
+    conda install cgatcore
 
 Hopefully that's all you need for Ruffus, cgat-core and python-drmaa. Best to check instructions for each tool however. For DRMAA you'll very likely need to liaise with your system's administrator.
 
