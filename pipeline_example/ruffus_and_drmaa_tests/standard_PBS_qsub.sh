@@ -2,7 +2,7 @@
 
 #Job parameters:
 #PBS -l walltime=00:10:00
-#PBS -l select=1:ncpus=8:mem=1gb
+#PBS -l select=1:ncpus=1:mem=1gb
 ##PBS -q med-bio 
 #PBS -V
 
@@ -20,6 +20,12 @@
 #cp $PBS_O_WORKDIR/$INFILE $TMPDIR
 
 #Commands to run:
+echo $TMPDIR
+echo $PATH
+echo $PBS_O_WORKDIR
+echo $PBS_O_PATH
+echo $PBS_NODEFILE
+
 which python
 python --version
 which R
