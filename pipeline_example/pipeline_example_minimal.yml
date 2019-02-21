@@ -14,3 +14,6 @@ general:
 pipeline_template:
     parameter_x: 
     parameter_y: 
+
+cluster:
+    tmpdir: /var/tmp/
