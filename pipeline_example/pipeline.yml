@@ -1,6 +1,7 @@
 ######################################################
 # pipeline_template.py configuration file
 # Add pipeline specific options into separate sections
+# pipeline_example_minimal.yml
 ######################################################
 
 # General options:
