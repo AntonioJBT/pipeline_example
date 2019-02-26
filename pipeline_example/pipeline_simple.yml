@@ -16,5 +16,5 @@ pipeline_template:
     parameter_x: 
     parameter_y: 
 
-cluster:
-    tmpdir: /tmp/
+#cluster:
+#    tmpdir: /tmp/
