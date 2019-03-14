@@ -1,32 +1,18 @@
 #######################
 ## CGAT config file, see:
-# https://github.com/CGATOxford/cgat/issues/86
+# https://cgat-core.readthedocs.io/en/latest/defining_workflow/Writing_workflow.html#setting-up-configuration-values
 
-# https://github.com/CGATOxford/CGATPipelines/pull/237
-#We need a consistent approach. Should this be the order, (later overwriting previous):
+# Order is:
 
-#1    Hardcoded defaults
-#2    System cgat.ini
-#3    User cgat.ini
-#4    job_memory, job_threads, job_options specified in task
-#5    cluster_options specified on command line
+# 1. Hard-coded values in cgatcore/pipeline/parameters.py.
+# 2. Parameters stored in pipeline.yml files in different locations.
+# 3. Variables declared in the ruffus tasks calling P.run(); e.g. job_memory=32G
+# 4. .cgat.yml file in the home directory
+# 5. cluster_* options specified in the command line; e.g. python pipeline_example.py --cluster-parallel=dedicated make full
 
 # Note that:
-# user's bashrc is loaded on work nodes.
-# Also note, the file
-# src/CGATPipelines/scripts/bashrc.cgat
-# is read as well, if semi-colons are not added at the end of each command, the error:
-
-# -bash: module: line 1: syntax error: unexpected end of file
-# -bash: error importing function definition for `BASH_FUNC_module'
-
-# appears; unset -f module does not cause this here. The error I think has no consequence though.
-
-# For PBSPro as in torque, mem is used and not mem_free
-
-## Set up environment with loaded packages. This errors if run here as configparser expects a header.
+# user's bashrc is (?) loaded on work nodes.
 #######################
-
 
 #######################
 ## Set-up overall options needed:
@@ -87,7 +73,7 @@ cluster:
     queue: NONE #med-bio
 
     parallel_environment:  ""
-    # This is the name of the queue (?) eg at WIMM 'dedicated'
+    # This is the name of the queue eg at WIMM 'dedicated'
 
 report:
     threads: 2
