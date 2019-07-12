@@ -93,7 +93,7 @@ Test whether programs are running as expected for ruffus, ruffus with drmaa, and
 
     # Check a cgat-core pipeline:
     python pipeline_example/pipeline_example/pipeline_example_minimal.py --help    
-    ln -s pipeline_example/pipeline_example/pipeline_example_minimal.yml .
+    ln -s pipeline_example/pipeline_example/pipeline.yml .
     # (the previous command would usually use the cgat-core config option)
     python pipeline_example/pipeline_example/pipeline_example_minimal.py show full
     python pipeline_example/pipeline_example/pipeline_example_minimal.py printconfig
