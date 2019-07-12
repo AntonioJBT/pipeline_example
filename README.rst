@@ -101,11 +101,11 @@ Test whether programs are running as expected for ruffus, ruffus with drmaa, and
     # Run locally:
     python pipeline_example/pipeline_example/pipeline_example_minimal.py make full --local
     # Check the outputs, eg:
-    cat pipeline_example_minimal.counts
+    cat pipeline.counts
     sqlite3 csvdb
     # within sqlite3 do eg:
-    sqlite> .tables ;
-    sqlite> SELECT * FROM pipeline_example_minimal_counts;
+    sqlite> .tables # which should print 'pipeline_counts'
+    sqlite> SELECT * FROM pipeline_counts;
     sqlite> .exit
 
     # On the cluster (you need to setup the appropriate configuration for your cluster)
