@@ -62,8 +62,8 @@ with signal (id signaled): %(terminatedSignal)s
 dumped core:               %(hasCoreDump)s
 aborted:                   %(wasAborted)s
 resource usage:            %(resourceUsage)s
-              """.format(info._asdict()
-              )
+              """.format(info._asdict())
+               )
 
 if __name__=='__main__':
     main()
