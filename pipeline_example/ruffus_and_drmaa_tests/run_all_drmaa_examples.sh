@@ -9,6 +9,10 @@
 ###########################
 # Set bash script options
 
+# trace what gets executed:
+set -o xtrace
+set -o errtrace
+
 # exit when a command fails:
 set -o errexit
 
@@ -17,10 +21,6 @@ set -o pipefail
 
 # exit if there are undeclared variables:
 set -o nounset
-
-# trace what gets executed:
-set -o xtrace
-set -o errtrace
 ###########################
 
 ###########################
