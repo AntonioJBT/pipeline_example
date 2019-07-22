@@ -7,8 +7,8 @@ def main():
     with drmaa.Session() as s:
         print('A DRMAA object was created')
         print('Supported contact strings: {}').format(s.contact)
-        print('Supported DRM systems: {}'.format(s.drmsInfo)
-        print('Supported DRMAA implementations: {}'.format(s.drmaaImplementation)
+        print('Supported DRM systems: {}').format(s.drmsInfo)
+        print('Supported DRMAA implementations: {}').format(s.drmaaImplementation)
 #        print('Version %s' % s.version)
 
         print('Exiting')
