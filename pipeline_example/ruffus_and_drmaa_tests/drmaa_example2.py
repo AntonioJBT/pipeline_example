@@ -16,7 +16,7 @@ def main():
     jt.joinFiles=True
     
     jobid = s.runJob(jt)
-    print('Your job has been submitted with id ' + jobid)
+    print('Your job has been submitted with id ' + str(jobid))
 
     print('Cleaning up')
     s.deleteJobTemplate(jt)
